@@ -1,0 +1,20 @@
+
+id=FB0A100123123213
+
+redis.host= 127.0.0.1
+redis.port= 6379
+redis.user=
+redis.password=
+redis.db=0
+
+
+mongodb.host=
+mongodb.port=
+mongodb.user=
+mongodb.password=
+
+log.debug = 1
+log.file = iot-proxy.log
+
+options=help,
+option.help
