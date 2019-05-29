@@ -3,11 +3,9 @@
 //
 
 #include "app.h"
+#include "Controller.h"
 #include <boost/program_options.hpp>
-
 namespace  bpo = boost::program_options;
-
-//bpo::variables_map vm;
 
 std::shared_ptr<Application>& Application::instance(){
 	static std::shared_ptr<Application> handle ;
@@ -17,43 +15,62 @@ std::shared_ptr<Application>& Application::instance(){
 	return handle;
 }
 
-///  options parse to reference:
-///  https://blog.csdn.net/morning_color/article/details/50241987
+///
 
-Application&  Application::init(int argc , char ** argvs){
-	cfgs_.load("settings.txt");
-//	Logger::HandlerPtr handle =
-	logger_.addHandler( std::make_shared<LogStdoutHandler>());
-	
-	
-	
+Application&  Application::init( int argc , char ** argv ){
+	inited_ = false;
+
 	bpo::options_description opts("all options");
 	bpo::variables_map vm;
-	
-	//步骤二: 为选项描述器增加选项
-	//其参数依次为: key, value的类型，该选项的描述
+
 	opts.add_options()
-			("id", bpo::value<std::string>(), "the unique id of smartbox.")
-			("logfile", bpo::value<std::string>(), "the running info into log file.")
-			("help", "more usage information..");
-	
-	//步骤三: 先对命令行输入的参数做解析,而后将其存入选项存储器
-	//如果输入了未定义的选项，程序会抛出异常，所以对解析代码要用try-catch块包围
-	try {
-		bpo::store(bpo::parse_command_line(argc, argvs, opts), vm);
-		if (vm.count("id")) {
-			cfgs_.set_string("id", vm["id"].as<std::string>());
-		}
-		if (vm.count("logfile")) {
-			cfgs_.set_string("log.file", vm["logfile"].as<std::string>());
-		}
-		
-	}catch(...){
-		this->getLogger().error("Program Options Parse Failed.");
+			("id", bpo::value<std::string>(), "device unique id specified")
+			("help", "--- green-agent help --- ");
+	try{
+		bpo::store(bpo::parse_command_line(argc, argv, opts), vm);
 	}
-	
-	logger_.addHandler( std::make_shared<LogFileHandler>(cfgs_.get_string("log.file")));
-	
+	catch(...){
+		std::cout << "输入的参数中存在未定义的选项！\n";
+		return *this;
+	}
+
+	if(vm.count("id") == 0 ) {
+		std::cout << " Device id needed." << std::endl;
+		return *this;
+	}
+
+	std::string device_id = vm["id"].as<std::string>();
+
+
+	cfgs_.load("/var/green/settings.txt");
+
+	// 更新用户自定义的参数
+//	Config user;
+//	user.load("settings.user");
+//	cfgs_.update(user);
+//	cfgs_.set_string("device_id",device_id);
+
+	std::string datapath = cfgs_.get_string("datapath","/var/green/data");
+	datapath+='/'+device_id;
+	cfgs_.set_string("datapath",datapath);
+	cfgs_.set_string("device_id", device_id);
+	std::string logfile = datapath + "/logs.txt";
+
+	logger_.setLevel(Logger::DEBUG);
+	logger_.addHandler( std::make_shared<LogStdoutHandler>());
+	logger_.addHandler( std::make_shared<LogFileHandler>(logfile));
+
+	//开启调试输出
+//	if( cfgs_.get_string("debug.log.udp.enable") == "true") {
+//		std::string host = cfgs_.get_string("debug.log.udp.host", "127.0.0.1");
+//		uint16_t port = cfgs_.get_int("debug.log.udp.port", 9906);
+//		logger_.addHandler(std::make_shared<LogUdpHandler>(host, port));
+//	}
+
+	Controller::instance()->init(cfgs_);
+	Controller::instance()->open();
+
+	inited_ = true;
 	return *this;
 }
 
@@ -63,7 +80,10 @@ Logger& Application::getLogger(){
 }
 
 void Application::run(){
-	
+    if( inited_ == false){
+        return;
+    }
+	Controller::instance()->run();
 	wait_for_shutdown();
 }
 
@@ -90,11 +110,7 @@ std::string Application::name(){
 	return cfgs_.get_string("application.name","Application");
 }
 
-void Application::processOptions(int argc , char ** argvs) {
-
-}
-
-int main(int argc , char ** argvs){
-	Application::instance()->init(argc,argvs).run();
+int main(int argc , char ** argv){
+	Application::instance()->init(argc, argv).run(  );
 }
 

@@ -51,7 +51,7 @@ http_trace: #自动日志记录
 datasources:
   - name: 'mongodb'
     class: 'mantis.fundamental.nosql.mongo.Datasource'
-    host: 'mongodb'
+    host: 'localhost'
     port: 27017
     dbname:
     user:
@@ -66,7 +66,7 @@ datasources:
 
   - name: 'redis'
     class: 'mantis.fundamental.redis.datasource.Datasource'
-    host: 'redis'
+    host: 'localhost'
     port: 6379
     password: ''
     db: 0
@@ -87,16 +87,16 @@ message_brokers:
 
   - name: 'redis'
     class: 'mantis.fundamental.redis.broker.MessageBroker'
-    host: 'redis'
+    host: '127.0.0.1'
     port: 6379
     password: ''
     db: 0
     enable: true
     channels:
-      - name: 'ctp_contract_tick_queue'
-#        handler: 'get_message'
+      - name: 'iot_data_chan'
+        handler: 'handlers.iot.get_message'
         enable: true
-        type: 'queue' # or queue
+        type: 'pubsub' # or queue
 
 services:
   - name: 'http'
@@ -134,15 +134,42 @@ services:
           - name: 'api'
             url: 'api'
             routes:
-              - url: '/device/actives'                    # url name
+              - url: '/api/smartbox/actives'                    # url name
                 name: 'get_active_devices'   # function name
                 methods: 'GET'
-              - url: '/command'
+
+              - url: '/api/smartbox/status'
+                name: 'get_device_status'
+                methods: 'GET'
+
+              - url: '/api/smartbox/status/q'
+                name: 'query_device_status'
+                methods: 'POST'
+
+              - url: '/api/smartbox/params'
+                name: 'set_device_value'
+                methods: 'POST'
+
+              - url: '/api/smartbox/sensor/params'
+                name: 'set_sensor_value'
+                methods: 'POST'
+
+              - url: '/api/smartbox/sensor/status'
+                name: 'get_sensor_status'
+                methods: 'GET'
+
+              - url: '/api/smartbox/command'
                 name: 'send_command'
                 methods: 'POST'
 
+              - url: '/api/smartbox/profile'
+                name: 'get_device_profile'
+                methods: 'GET'
+
   - name:       'main'
-    id:     'location-adapter'
+    id:     's001'
+    service_id: 's001'
+    service_type: 'smartserver'
     enable:     true
     class:      'main.MainService'
     table_name_lbs_cell: 'lbs_cell'
@@ -152,38 +179,28 @@ services:
           - 'redis/blue_earth.device.message.queue/queue'
           - 'redis/blue_earth.device.message.pub/pubsub'
 
-      - name: 'data-location'
-        channels:
-          - 'redis/blue_earth.device.location.queue/queue'
-
       - name: 'logging'
         channels:
           - 'redis/trade.log.{service_type}/queue'
           - 'redis/trade.log.{service_type}.{service_id}/pubsub'
-      - name: 'strategy_logging'
-        channels:
-          - 'redis/trade.strategy.log/queue'
-          - 'redis/trade.strategy.log.pub/pubsub'
-    lbs_ak: '0b7d114fdc4eb50079408292b7249015'
-    lbs_web_ak: 'c0c74a14f8b411cc5433e8946bf82377'
-    audio_path: '/tmp/audio'
-    access_command_url: 'http://localhost:19002/api/command'
+
+    access_api_url: 'http://localhost:19002'
+
+    message_chan_address_iot: 'redis/iot_chan.{}/pubsub'    # 接收来自iot控制消息
+    message_chan_address: 'redis/message_chan.{}/pubsub'  # 来自外部控制消息
+
+    token_valid_time: 36000
+
     servers:
-      - name: 'ibox-server'
+      - name: 'server'
         enable: true
         host: ''
-        port: 25002
-        accumulator:
-          class: 'mantis.BlueEarth.vendor.concox.gt03.accumulator.DataAccumulator'
-        handler:
-          class: 'handlers.ibox.DataAdapter'
-          device_type: 'ibox-1'
-          sequence_key: 'blue_earth.device.sequence.gt03'
-          command_controller: 'mantis.BlueEarth.vendor.concox.gt03.command.CommandController'
-
-
-
-
+        port: 9088
+        heartbeat: 10
+        handler_cls:
+          class: 'handlers.smartbox.SmartAdapter'
+          kwargs:
+            max : 100
 
 
 # qpid-receive -b localhost:5672 -a "mq_test;{create:always,node:{type:queue,durable:true}}"

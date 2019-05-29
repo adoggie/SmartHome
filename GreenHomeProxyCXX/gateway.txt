@@ -1,0 +1,19 @@
+mac = FBXDDD0001
+platformPort = 5683
+platformAddr = 117.78.47.187
+manufacturerId = swfb-1
+deviceType = sb01
+model = 01
+protocolType = z-wave
+
+
+sensor_num = 1
+sensor_1.NodeId =
+sensor_1.ManufacturerName =
+sensor_1.ManufacturerId =
+sensor_1.DeviceType =
+sensor_1.Model =
+sensor_1.ProtocolType =
+
+
+

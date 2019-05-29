@@ -1,0 +1,36 @@
+all: smartbox
+.PHONY: clean
+TARGET = smartbox
+HEADERS = Controller.h base64.h config.h error.h mcu.h mongoose.h server.h utils.h app.h base64_.h connection.h http.h md5.h sensor.h service.h version.h base.h codec.h crc16.h logger.h message.h sensor_message.h stringutils.h watchdog.h
+OBJECTS = Controller.o codec.o crc16.o logger.o md5.o sensor.o service.o \
+        watchdog.o app.o config.o error.o main.o message.o sensor_message.o  base64.o connection.o http.o mcu.o mongoose.o server.o utils.o
+
+
+ACC= ${CXX}
+LDFLAGS= -static
+ALDFLAGS = ${LDFLAGS}
+
+LIBS= -lboost_system  -ljsoncpp -lpthread -lserialport
+CFLAGS= -Wall
+DEFINE= -DMACOS -D_MACOS  -O2 -D_LINUX
+LINK= -L. -L/usr/local/lib -L/home/linaro4.9.4/arm-linux-gnueabi/libc/lib
+INCLUDE= -I . -I/usr/local/include
+
+%.o: %.c $(HEADERS)
+	$(ACC) $(DEFINE) $(INCLUDE) $(ALDFLAGS) -c $< -o $@ 
+
+%.o: %.cpp $(HEADERS)
+	$(ACC) $(DEFINE) $(INCLUDE) $(ALDFLAGS) -std=c++11 -c $< -o $@
+
+#$(objects): %.o
+
+$(TARGET): $(OBJECTS)
+
+	$(ACC) $(DEBUG) $(DEFINE) $(OBJECTS)  -o $@ $(LINK) $(INCLUDE) $(LIBS) $(CFLAGS) $(ALDFLAGS)
+	arm-linux-gnueabi-strip $(TARGET)
+	
+
+clean:
+	-rm -f $(OBJECTS)
+	-rm -f $(TARGET)
+	rm -f *.o

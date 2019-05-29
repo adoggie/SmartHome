@@ -1,0 +1,18 @@
+
+datapath = /var/green/data
+
+redis.host= 192.168.14.17
+redis.port= 6379
+redis.user=
+redis.password=
+redis.db=0
+
+platformPort = 5683
+platformAddr = 117.78.47.187
+
+server_data_mq = iot_data_chan
+log.debug = 1
+log.file = iot-proxy.log
+
+options=help,
+option.help

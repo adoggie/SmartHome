@@ -20,7 +20,7 @@ class Application:public Object,public ServiceContainer{
 public:
 	static std::shared_ptr<Application>& instance();
 
-	Application&  init(int argc , char ** argvs);
+	Application&  init(int argc , char ** argv);
 
 	Logger& getLogger();
 
@@ -34,8 +34,7 @@ public:
 	std::string name();
 protected:
 	void wait_for_shutdown();
-	
-	virtual void processOptions(int argc , char ** argvs);
+	bool inited_;
 
 };
 

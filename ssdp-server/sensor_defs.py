@@ -1,0 +1,68 @@
+#coding:utf-8
+
+profile = {
+  "id": "9901",
+  "name": "house-template-1",
+  "version": "1.0.0",
+  "author": "scott",
+  "project_id": "9999",
+  "garden_id" : "home",
+  "manufacture": "fanbei-smart",
+
+  "house": {"name": "我的狗窝"},
+  "rooms": {
+    "A":{"name": "客厅" },
+    "B":{"name": "主卧" },
+    "C":{"name": "卫生间" }
+  },
+
+  "sensor_defines": [
+    {
+      "name": "灯",
+      "type": 2 ,
+      "vendor": "Panasonic",
+      "model": "YJ-911",
+      "features": {
+        "switch": {
+          "name": "开关",
+          "id": 1,
+          "value_type": {"name": "enum", "items": ["on","off"] ,"default":"off"},
+          "commands": {
+            "on": {"name": "开", "value": 1},
+            "off": {"name": "关", "value": 0}
+          }
+        },
+        "brightness": {
+          "name": "亮度",
+          "id": 2,
+          "value_type": {"name": "num", "start": 1,"end": 10,"step": 1,"default": 1},
+          "commands": {
+            "max": {"name": "最亮","value": 10},
+            "min": {"name":"最暗", "value": 1},
+            "up": {"name": "增亮","value": "u"},
+            "down": {"name": "减暗","value": "d"}
+          }
+        },
+        "color": {
+          "name": "颜色",
+          "id": 3,
+          "value_type": {"name": "num","start": 1,"end": 3,"step": 1,"default": 1},
+          "commands": {
+            "red": {"name": "红","value":1},
+            "green": {"name": "绿","value":2},
+            "blue": {"name": "蓝","value":3},
+            "next": {"name": "下一种","value":"n"},
+            "back": {"name": "上一种","value":"b"}
+          }
+        }
+
+      }
+    }
+  ],
+
+  "sensors": [
+    {"type": 2,"id": 1,"room_id": "A","name": "吊灯"},
+    {"type": 2,"id": 2,"room_id": "A","name": "床头灯"}
+  ]
+
+}

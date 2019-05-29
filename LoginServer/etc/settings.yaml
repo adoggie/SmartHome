@@ -1,0 +1,150 @@
+
+app_name: 'testModule'
+project_name: 'testProject'
+project_version: '0.1'
+
+logging:
+  level: DEBUG
+  format: '%(levelname)s %(asctime)s  %(message)s'
+  message_format: '%(project_name)s:%(project_version)s %(app_id)s %(_filename)s:%(_lineno)d [%(tags)s] '
+
+  filters:
+    trans:
+      tag: 'TRANS:'   # tag 过滤
+  handlers:
+    - type: file
+      enable: true
+      filename: 'server.log'
+      encoding: 'UTF-8'
+      max_bytes: 67108864 # 64MB
+      backup_count: 10
+
+    - type: console
+      enable: true
+
+
+
+http_trace: #自动日志记录
+  level: DEBUG
+  request:
+    options:
+      header:  false
+      body:  true
+      max_size: 500 # 最大数据包长度
+    urls:
+      - match: '/'
+      - match: 'zoo/cat'
+        body:  true
+
+  response:
+    options:
+      header:  false
+      body:  true
+      max_size: 500 # 最大数据包长度
+    urls:
+      - match: '/'
+      - match: 'zoo/cat'
+        body:  true
+
+
+
+datasources:
+  - name: 'mongodb'
+    class: 'mantis.fundamental.nosql.mongo.Datasource'
+    host: 'localhost'
+    port: 27017
+    dbname:
+    user:
+    password:
+    enable: true
+
+  - name: 'redis'
+    class: 'mantis.fundamental.redis.datasource.Datasource'
+    host: 'redis'
+    port: 6379
+    password: ''
+    db: 0
+    enable: true
+
+message_brokers:
+
+  - name: 'redis'
+    class: 'mantis.fundamental.redis.broker.MessageBroker'
+    host: 'redis'
+    port: 6379
+    password: ''
+    db: 0
+    enable: true
+    channels:
+      - name: 'ctp_contract_tick_queue'
+#        handler: 'get_message'
+        enable: true
+        type: 'queue' # or queue
+
+services:
+  - name: 'http'
+    class: 'mantis.fundamental.flask.service.FlaskService'
+    enable: true
+    block: false
+    cfgs:
+      SQLALCHEMY_DATABASE_URI : 'sqlite:////tmp/test.db'
+      SQLALCHEMY_BINDS:
+      SQLALCHEMY_TRACK_MODIFICATIONS : true
+      SQLALCHEMY_COMMIT_ON_TEARDOWN : true
+      SECRET_KEY : "abc"
+      TEMPLATES_AUTO_RELOAD: true
+      DEBUG: true
+      SEND_FILE_MAX_AGE_DEFAULT: 0
+    http:
+#      host : '172.16.109.237'
+      host : '127.0.0.1'
+      port : 9021
+      threaded: false
+      debug: true
+      websocket: false
+
+    blueprints:
+      - package: 'http'
+        url: '/'
+        name: 'http'
+        register: true
+        modules:
+          - name: 'api'
+            url: 'server/api/'
+            routes:
+              - url: 'login'           # 用户微信登录
+                name: 'device_login'       #
+                methods: 'POST,GET'
+
+
+  - name:       'main'
+    id:     'login_server'
+    enable:     true
+    class:      'main.MainService'
+
+    fanout:
+      - name: 'switch0'
+        channels:
+#          - 'redis/con/queue'
+          - 'redis/concox_device_message/pubsub'
+      - name: 'logging'
+        channels:
+          - 'redis/trade.log.{service_type}/queue'
+          - 'redis/trade.log.{service_type}.{service_id}/pubsub'
+      - name: 'strategy_logging'
+        channels:
+          - 'redis/trade.strategy.log/queue'
+          - 'redis/trade.strategy.log.pub/pubsub'
+
+    device_secret_key: '123456'
+
+
+
+
+# qpid-receive -b localhost:5672 -a "mq_test;{create:always,node:{type:queue,durable:true}}"
+
+
+
+
+
+

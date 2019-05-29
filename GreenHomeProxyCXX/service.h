@@ -6,6 +6,7 @@
 #define INNERPROC_SERVICE_H
 
 #include <boost/asio.hpp>
+#include <thread>
 #include "config.h"
 
 

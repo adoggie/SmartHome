@@ -1,0 +1,10 @@
+{
+"mac":"1263549876",
+"platformAddr":"100.115.140.30",
+"platformPort":8943,
+"manufacturerId":"Huawei",
+"deviceType":"Gateway",
+"model":"AgentLite01",
+"protocolType":"HuaweiM2M",
+"loglevel":255
+}
