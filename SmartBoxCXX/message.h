@@ -20,6 +20,7 @@
 #define MESSAGE_SENSOR_STATUS_QUERY     		"sensor_status_query"       // 传感器设备参数设置
 #define MESSAGE_SENSOR_STATUS     		"sensor_status"       // 传感器设备参数设置
 #define MESSAGE_SENSOR_VALUE_SET     		"sensor_val_set"       // 传感器设备参数设置
+#define MESSAGE_COMMAND_DOWN     		"dev_command"       // 平台下发控制命令
 
 
 class MessageJsonParser;
@@ -169,6 +170,19 @@ struct MessageDeviceStatusQuery:MessageTraverseDown{
 	static std::shared_ptr<Message> parse(const Json::Value& root);
 	std::shared_ptr<MessagePayload> asPayload() const;
 };
+
+struct MessageDeviceCommand:MessageTraverseDown{
+    std::string     type;
+    std::string     command;
+    PropertyStringMap params;
+
+    MessageDeviceCommand():MessageTraverseDown(MESSAGE_COMMAND_DOWN){
+    }
+
+    static std::shared_ptr<Message> parse(const Json::Value& root);
+};
+
+
 
 struct MessageDeviceStatus:MessageTraverseUp{
 //    std::string host_ver ;

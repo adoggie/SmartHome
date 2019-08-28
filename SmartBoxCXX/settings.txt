@@ -1,11 +1,10 @@
 
 # 设备编号
-id=FBT001990100000000001
+id=FBXDDD0001
 type=1
 token=a12312
-login_server_url=http://localhost:9021/server/api/login
-#物业服务器管理接口地址
-propserver_url = http://127.0.0.1:8091
+login_server_url=http://wallizard.com:9021/server/api/login
+
 
 controller.check_timer = 5
 
@@ -19,12 +18,6 @@ listen_port=7002
 #主机提供的http管理端口
 http.port=7001
 http.document_root=/tmp/smartbox/http
-
-#本地srs推流服务器地址
-stream_url=http://%s:954/streaming/%s
-
-#中心推流服务器地址
-center_stream_url=http://%s:954/streaming/%s
 
 #超级访问身份令牌
 advance_access_token = YTU3NzVlYjktYjQwMi00MGY2LTkxZjktYWMxYjIxZjM4NjNlCg==
@@ -48,3 +41,12 @@ watchdog.enable = 0
 cmd_opendoor = 3,0,1,0,1,0
 
 profile = profile.json
+mcu_uart_enable = false
+mcu_tcp_connect = true
+
+mcu_channel_port = 11230
+mcu_channel_host = 192.168.0.51
+mcu_channel_heartbeat = 1000
+
+#默认不自动上传profile
+auto_upload_profile = 1

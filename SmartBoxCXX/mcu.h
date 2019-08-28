@@ -20,10 +20,22 @@
 #include "message.h"
 #include "sensor.h"
 //#include "event.h"
+#include "McuChannel.h"
 
+
+//struct SensorDeviceUniqueId{
+//	std::string type;
+//	std::string id;
+//};
 typedef std::string SensorDeviceFeatureUniqueId;
+typedef std::string SensorDeviceUniqueId; // sensor_type.sensor_id
+typedef std::string FeatureName;
+typedef std::string FeatureValue;
+
+typedef std::map< FeatureName , FeatureValue > FeatureItemMap;
 // 设备当前最新的状态值
 typedef std::map< SensorDeviceFeatureUniqueId, MessagePayload::Ptr > SensorFeatureValues;
+typedef std::map< SensorDeviceUniqueId, FeatureItemMap> SensorFeatures;
 
 class McuController:public ISensorListener{
 public:
@@ -47,7 +59,7 @@ public:
 
 	void hearbeat();    //
 	void setFeatureValue(const MessagePayload::Ptr payload);
-	std::string getFeatureValue(const SensorDeviceFeatureUniqueId& feature_id);
+	std::string getFeatureValue(const SensorDeviceUniqueId& sensor , const std::string& feature_name);
 	std::string getFeatureValue(const std::string& b, const std::string& c, const std::string& d);
 
 	bool sendMessage(const MessagePayload::Ptr payload); //向设备发送消息
@@ -56,6 +68,7 @@ public:
 						const std::string& name , const std::string& value ); 	// 设置端点设备的参数值（包括控制)
 	PropertyStringMap getSensorStatus(const std::string& sensor_id,
 									  const std::string& sensor_type); // 获取端点设备的所有当前运行状态值
+	SensorFeatures getAllSensorFeatures();
 private:
 
 	void init_configs();
@@ -88,6 +101,8 @@ private:
 
 	std::string     rand_key_;  //控制开门的密码
     std::time_t     last_rand_key_time_;    // 最新生成randkey的时间
-	SensorFeatureValues	feature_values_;
+//	SensorFeatureValues	feature_values_;
+	SensorFeatures  sensor_features_;
+    McuChannel   mcu_tcp_channel_;
 };
 #endif //INNERPROC_SECZONE_H

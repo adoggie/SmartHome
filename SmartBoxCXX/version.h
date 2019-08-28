@@ -6,6 +6,8 @@
 #define INNERPROC_VERSION_H
 
 
-#define VERSION  "0.1.0"
+//#define VERSION  "0.1.1"
+//#define VERSION  "0.1.3"
+#define VERSION  "0.1.5"
 
 #endif //INNERPROC_VERSION_H

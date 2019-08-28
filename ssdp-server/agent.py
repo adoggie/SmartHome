@@ -28,6 +28,7 @@ class DeviceList(object):
         device_list = rokid.get_device_list()
         jsondata = json.dumps( {"status":0 ,"data": device_list} )
         # jsondata = json.dumps(device_list.device_list)
+        print jsondata
         return jsondata
 
 """

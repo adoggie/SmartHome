@@ -15,7 +15,7 @@
 #include "utils.h"
 #include "app.h"
 
-
+#define SCOPE_LOCK std::lock_guard<std::recursive_mutex> lock(mutex_);
 //McuController::McuController(boost::asio::io_service& io_service):io_service_(io_service){
 //
 //}
@@ -34,8 +34,16 @@ bool McuController::init(const Config & cfgs){
 	PropertyStringMap sensor_props;
 	sensor_props["port"] = cfgs.get_string("seczone_serial_port");
 	sensor_props["baudrate"] = cfgs.get_string("seczone_serial_baudrate");
-	sensor_.init(sensor_props);
-	sensor_.setListener(this);
+
+	if( cfgs.get_string("mcu_tcp_connect") == "true" ){ // 采用tcp连接到mcu
+	    mcu_tcp_channel_.init(cfgs);
+	    mcu_tcp_channel_.setListener(this);
+	}
+	if( cfgs.get_string("mcu_uart_enable") == "true"){
+        sensor_.init(sensor_props);
+        sensor_.setListener(this);
+	}
+
 
 	heartbeat_interval_ = cfgs.get_int("sensor_hb_interval",5);
 	max_offline_time_ = cfgs.get_int("sensor_offline_time",3600); // 默认1小时收不到心跳包
@@ -44,7 +52,12 @@ bool McuController::init(const Config & cfgs){
 }
 
 bool McuController::open(){
-	sensor_.open();
+    if( cfgs_.get_string("mcu_tcp_connect") == "true" ){
+        mcu_tcp_channel_.open();
+    }
+    if(cfgs_.get_string("mcu_uart_enable") == "true"){
+        sensor_.open();
+    }
 
 	running_ = true;
 	timer_ = std::make_shared<boost::asio::steady_timer>(io_service());
@@ -53,6 +66,22 @@ bool McuController::open(){
 
 //	std::thread thread(std::bind(&McuController::get_gpio_status,this));
 //	std::thread thread(&McuController::get_gpio_status,this);
+
+	if(TEST){ // test
+		auto m = std::make_shared<MessagePayload>();
+		m->b = 2;
+		m->c = 90;
+		m->d = "switch";
+		m->e = "on";
+        setFeatureValue(m);
+
+        m->b = 2;
+        m->c = 89;
+        m->d = "bright";
+        m->e = "10";
+
+		setFeatureValue(m);
+	}
 	return true;
 }
 
@@ -85,7 +114,12 @@ void McuController::close(){
 
 void McuController::hearbeat(){
 	std::shared_ptr< SensorMessageHeartbeat > message = std::make_shared<SensorMessageHeartbeat>();
-	sensor_.sendMessage(message);
+    if( cfgs_.get_string("mcu_tcp_connect") == "true" ) {
+        mcu_tcp_channel_.sendMessage(message);
+    }
+    if( cfgs_.get_string("mcu_uart_enable") == "true"){
+        sensor_.sendMessage(message);
+    }
 }
 
 bool McuController::setPassword(const std::string& old,const std::string& _new ){
@@ -152,31 +186,56 @@ void McuController::onMessage(std::shared_ptr<MessagePayload> &message, Sensor *
 
 // 发送端点控制消息
 bool McuController::sendMessage(const MessagePayload::Ptr payload){
-	sensor_.sendMessage(payload);
+    if( cfgs_.get_string("mcu_tcp_connect")  == "true" ) {
+        mcu_tcp_channel_.sendMessage(payload);
+    }
+    if(cfgs_.get_string("mcu_uart_enable") == "true"){
+        sensor_.sendMessage(payload);
+    }
 	return true;
 }
 
 // 缓存最新的设备状态值
 void McuController::setFeatureValue(const MessagePayload::Ptr message){
-	std::string uid;
-	uid = message->uniqueId();
-	feature_values_[uid] = message;
+	SCOPE_LOCK;
+
+	SensorDeviceUniqueId sid ;
+	sid  = boost::lexical_cast<std::string>(message->b) + "." + boost::lexical_cast<std::string>(message->c) ;
+
+	std::string name , value;
+	name = message->d;
+	value = message->e;
+
+	auto itr = sensor_features_.find(sid);
+	if( itr != sensor_features_.end()){
+		auto& features = itr->second;
+		features[name] = value ;
+	}else{
+		sensor_features_[sid] = FeatureItemMap();
+		sensor_features_[sid][name] = value;
+	}
+
 }
 
 //查询当前端点设备某一项功能的状态值
-std::string McuController::getFeatureValue(const SensorDeviceFeatureUniqueId& feature_id){
+std::string McuController::getFeatureValue(const SensorDeviceUniqueId& sensor , const std::string& feature_name){
+	SCOPE_LOCK
 	std::string value;
-	if( feature_values_.find(feature_id) != feature_values_.end() ){
-		auto p = feature_values_[ feature_id ];
-		value = p->e;
+	auto itr  = sensor_features_.find(sensor);
+	if(itr!= sensor_features_.end()){
+		auto & features = itr->second;
+		auto featureItr = features.find(feature_name);
+		if( featureItr!= features.end()){
+			value = featureItr->second;
+		}
 	}
 	return value;
 }
 
 std::string McuController::getFeatureValue(const std::string& b, const std::string& c, const std::string& d){
-	SensorDeviceFeatureUniqueId uid;
-	uid = b+"."+c+"_"+ d;
-	return getFeatureValue(uid);
+	SensorDeviceUniqueId uid;
+	uid = b + "." + c;
+	return getFeatureValue(uid,d);
 }
 
 // 设置端点设备的参数值（包括控制)
@@ -200,21 +259,17 @@ bool McuController::setSensorValue(const std::string& sensor_id, const std::stri
 // 获取端点设备的所有当前运行状态值
 PropertyStringMap McuController::getSensorStatus(const std::string& sensor_id,
 								  const std::string& sensor_type){
-	PropertyStringMap values;
-	std::string prex = sensor_type + "." + sensor_id;
-	for(auto p : feature_values_){
-		std::string feature_name;
-		std::string feature_value;
+	SCOPE_LOCK
 
-		std::vector<std::string> fields;
-		boost::split(fields, p.first, boost::is_any_of(("_")));
-		if(fields.size() == 2){
-			if( fields[0] == prex){
-				feature_name = fields[1];
-				feature_value = p.second->e;
-				values[feature_name] = feature_value;
-			}
-		}
+	PropertyStringMap values;
+	SensorDeviceUniqueId sid ;
+	sid = sensor_type + "." + sensor_id ;
+
+
+	auto itr = sensor_features_.find( sid );
+	if( itr != sensor_features_.end()){
+		values = itr->second;
+
 	}
 
 	// 再做一次查询
@@ -225,4 +280,9 @@ PropertyStringMap McuController::getSensorStatus(const std::string& sensor_id,
 	this->sendMessage(p);
 
 	return values;
+}
+
+SensorFeatures McuController::getAllSensorFeatures(){
+	SCOPE_LOCK
+	return sensor_features_;
 }

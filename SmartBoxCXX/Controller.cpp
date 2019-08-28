@@ -16,6 +16,7 @@
 #include "tcpchannel.h"
 
 bool Controller::init(const Config& props){
+	boot_time_ = std::time(NULL);
 	settings_.login_inited = false;
 
 	cfgs_ = props;
@@ -72,9 +73,37 @@ Json::Value Controller::getStatusInfo(){
 	 	]
 	 }
 	 */
-	// todo. 需要完成
 	Json::Value value;
-//	value[""]
+	value["id"] = getDeviceUniqueID();
+	value["time"] = (Json::UInt64) std::time(NULL);
+	value["host_ver"] = VERSION;
+	value["mcu_ver"] = "";
+	value["boot_time"] = (Json::UInt64) boot_time_;
+
+	auto sensors = McuController::instance()->getAllSensorFeatures();
+	Json::Value ss;
+
+
+	for(auto itr : sensors){
+		Json::Value node;
+		std::string sid = itr.first;
+		std::vector<std::string> fields;
+		boost::split(fields, sid, boost::is_any_of((".")));
+		int sensor_type , sensor_id;
+		if( fields.size() != 2){
+			continue ;
+		}
+		sensor_type = boost::lexical_cast<int>(fields[0]);
+		sensor_id = boost::lexical_cast<int>(fields[1]);
+		node["sensor_type"] = sensor_type;
+		node["sensor_id"] = sensor_id;
+		for(auto _: itr.second ){
+			node[_.first] = _.second;
+		}
+		ss.append(node);
+	}
+	value["sensors"] = ss;
+	// todo. 需要完成
 	return value;
 }
 
@@ -301,31 +330,12 @@ void Controller::onConnected(const Connection::Ptr& conn){
 	conn->send( login_req->marshall());
 
 	// 发送 profile 到平台
-
-	std::string profile = Application::instance()->getConfig().get_string("profile");
-	std::ifstream ifs;
-	ifs.open(profile);
-	if( ifs.is_open() ){
-		ifs.seekg(0, std::ios::end);
-		int length = ifs.tellg();
-		ifs.seekg(0, std::ios::beg);
-		char * buf = new char[length];
-		ifs.read(buf,length);
-		ifs.close();
-
-		std::string str_in(buf,length),str_out;
-		bool succ = Base64::Encode(str_in,&str_out);
-		if(succ){
-			std::shared_ptr<MessageDeviceStatus> status = std::make_shared<MessageDeviceStatus>();
-			status->params["profile"] = str_out;
-			status->params["encode"] = "base64";
-			conn->send(status->marshall());
-		}
-
-		delete [] buf;
+	if(cfgs_.get_int("auto_upload_profile",1)){
+        uploadProfile();
 	}
 
-//	live_time_outside_ = std::time(NULL);
+
+    //	live_time_outside_ = std::time(NULL);
 }
 
 //外部连接丢失
@@ -350,7 +360,7 @@ void Controller::onConnectError(const Connection::Ptr& conn,ConnectionError erro
 
 void Controller::onJsonText(const std::string & text,const Connection::Ptr& conn){
 	std::lock_guard<std::recursive_mutex> lock(this->rmutex_);
-
+    Application::instance()->getLogger().debug("<< Data From Remote Server : " + text);
 	Message::Ptr message = MessageJsonParser::parse(text.c_str(),text.size());
 	if(!message){
 		return ;
@@ -414,6 +424,59 @@ void Controller::onJsonText(const std::string & text,const Connection::Ptr& conn
 			return;
 		}
 	}
+
+    { //下发命令
+        std::shared_ptr<MessageDeviceCommand> msg = std::dynamic_pointer_cast<MessageDeviceCommand>(message);
+        if(msg) {
+            if(msg->command == "upload_profile"){ // 服务器通知上传设备profile
+                uploadProfile();
+            } else if(msg->command == "reboot"){
+                //设备重启
+            } else if(msg->command == "upgrade"){
+                //软件升级
+            }
+            return;
+        }
+    }
+
+}
+
+void Controller::uploadProfile(){
+    std::lock_guard<std::recursive_mutex> lock(rmutex_);
+    if(!conn_){
+        return ;
+    }
+
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+    std::string profile = Application::instance()->getConfig().get_string("profile");
+    std::ifstream ifs;
+
+    if( profile.length() == 0){
+        return ;
+    }
+
+    profile = std::string(HOME_PATH) + "/" + profile;
+    ifs.open(profile);
+    if( ifs.is_open() ){
+        ifs.seekg(0, std::ios::end);
+        int length = ifs.tellg();
+        ifs.seekg(0, std::ios::beg);
+        char * buf = new char[length];
+        ifs.read(buf,length);
+        ifs.close();
+
+        Application::instance()->getLogger().info("To Upload Profile To Server..");
+        std::string str_in(buf,length),str_out;
+        bool succ = Base64::Encode(str_in,&str_out);
+        if(succ){
+            std::shared_ptr<MessageDeviceStatus> status = std::make_shared<MessageDeviceStatus>();
+            status->params["profile"] = str_out;
+            status->params["encode"] = "base64";
+            conn_->send(status->marshall());
+        }
+
+        delete [] buf;
+    }
 }
 
 // 发送到云端

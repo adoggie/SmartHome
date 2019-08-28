@@ -17,7 +17,7 @@ from mantis.fundamental.utils.importutils import import_class
 from mantis.fanbei.smarthome import model
 from mantis.fanbei.smarthome.message import  *
 from mantis.fanbei.smarthome.model import set_database
-from handlers import iot_message
+# from handlers import iot_message
 
 class MainService(BaseService):
     def __init__(self,name):
@@ -26,8 +26,10 @@ class MainService(BaseService):
         self.servers = {}
         self.adapters ={}
 
-        self.iot_chan =  None  # 接收绿城+的命令控制
-        self.ctrl_chan = None       # 设备控制消息
+        self.apps = {}      # app 软件连接进入
+
+        # self.iot_chan =  None  # 接收绿城+的命令控制
+        # self.ctrl_chan = None       # 设备控制消息
 
     def init(self, kwargs):
         # self.parseOptions()
@@ -91,37 +93,6 @@ class MainService(BaseService):
     def initCommandChannels(self):
         BaseService.initCommandChannels(self)
 
-        # #增加读取 绿城SDK 发送过来的设备控制信息
-        # addr = self.cfgs.get('message_chan_address_iot').format(self.service_id)
-        # self.iot_chan = self.createServiceCommandChannel(addr, self.handleIoTMessage, open=True)
-        # # self.registerCommandChannel('get', chan)
-        #
-        # # 增加读取设备控制信息( 外部系统通过redis 推送控制消息要求转发到设备)
-        # addr = self.cfgs.get('message_chan_address')
-        # self.ctrl_chan = self.createServiceCommandChannel(addr, self.handleMessage, open=True)
-
-    def traverseDownMessage(self,device_id,message):
-        """发送设备消息"""
-        adapter = self.adapters.get(device_id)
-        if adapter:
-            adapter.traverseDown(message)
-
-    # def handleMessage(self,data,ctx):
-    #     """发送到达的控制消息 """
-    #     msg = parseMessage(data)
-    #     if not isinstance(msg,MessageTraverseDown):
-    #         return
-    #     self.traverseDownMessage(msg.device_id,msg)
-    #     # 对消息的其他处理逻辑，转储，转发..
-    #
-    #
-    # def handleIoTMessage(self,data,ctx):
-    #     """ 仅仅处理 绿城+ 发送到达的控制消息 """
-    #     msg = iot_message.parseMessage(data)
-    #     if not isinstance(msg, iot_message.MessageSensorValueSet):
-    #         return
-    #     self.traverseDownMessage(msg.device_id,msg)
-
     def getActivedDevices(self):
         return self.adapters.values()
 
@@ -136,23 +107,14 @@ class MainService(BaseService):
                 del self.adapters[device_id]
                 break
 
-    # def sendCommand(self,device_id,command,online=False):
-    #     """将命令推入发送队列，待设备上线，统一发送"""
-    #     device = model.Device.get(device_id=device_id)
-    #     if not device:
-    #         self.logger.error('device_id:{} is not existed.'.format(device_id))
-    #         return
-    #     device_type = device.device_type
-    #     # adapter = self.adapters.get(device_id)
-    #     # if not adapter:
-    #     #     self.logger.error('Method:sendCommand Detail: device_id({}) is not found.'.format(device_id))
-    #     #     return False
-    #     if online: # 必须在线发送
-    #         if not self.adapters.has_key(device_id):
-    #             self.logger.debug('sendCommand Error,device not online. {}'.format(device_id))
-    #             return
-    #     sendCommand(device_id,device_type,command)
-    #     return True
+    def appOnline(self,app):
+        self.apps[ app.app_id] = app
+
+    def appOffline(self,app):
+        for app_id,item in self.apps.items():
+            if item == app:
+                del self.adapters[app_id]
+                break
 
 
 """

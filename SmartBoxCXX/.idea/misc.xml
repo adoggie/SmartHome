@@ -4,4 +4,26 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://wallizard.com:4000/SmartHome" />
+                  <option value="svn://wallizard.com:4000/SmartHome/Branches" />
+                  <option value="svn://wallizard.com:4000/SmartHome/Design" />
+                  <option value="svn://wallizard.com:4000/SmartHome/Docs" />
+                  <option value="svn://wallizard.com:4000/SmartHome/dev-branches" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://wallizard.com:4000/SmartHome/dev-branches" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
 </project>

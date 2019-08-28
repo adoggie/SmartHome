@@ -60,7 +60,7 @@ public:
 	void handle_sensor_status_query(struct mg_connection *nc, struct http_message *hm );
 	void handle_profile_get(struct mg_connection *nc, struct http_message *hm );
 
-	void handle_sensor_status_upload(struct mg_connection *nc, struct http_message *hm );
+	void handle_sensor_status_generate(struct mg_connection *nc, struct http_message *hm );
 
 //	void handle_innerdevice_list(struct mg_connection *nc, struct http_message *hm );
 //	void handle_innerdevice_login(struct mg_connection *nc, struct http_message *hm );

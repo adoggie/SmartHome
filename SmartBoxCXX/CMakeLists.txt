@@ -12,7 +12,7 @@ add_executable(SmartBox Controller.cpp base64.cpp connection.cpp error.cpp logge
         Controller.h base.h  connection.h error.h logger.h md5.h mongoose.h service.h utils.h watchdog.h app.h base64.h config.h crc16.h http.h mcu.h message.h sensor.h stringutils.h version.h
         server.cpp codec.cpp
         tcpchannel.cpp tcpchannel.h
-        )
+        McuChannel.cpp McuChannel.h)
 
 
 

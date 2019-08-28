@@ -15,8 +15,8 @@ from mantis.fundamental.network.accumulator import JsonDataAccumulator
 from mantis.fanbei.smarthome.message import *
 from mantis.fanbei.smarthome import constants
 from mantis.fanbei.smarthome import model
-import iot_message
-import iot
+from mantis.fanbei.smarthome import constants
+
 
 class SmartAdapter(ConnectionEventHandler):
     def __init__(self):
@@ -53,6 +53,7 @@ class SmartAdapter(ConnectionEventHandler):
         # self.msg_codec = MessageJsonStreamCodec()
         self.box = None
         self.device_type = ''
+        self.channel_down = None
 
     def init(self,**kwargs):
         self.cfgs.update(kwargs)
@@ -62,6 +63,9 @@ class SmartAdapter(ConnectionEventHandler):
 
         # cls = import_class(self.cfgs.get('command_controller'))
         # self.command_controller = cls()
+
+        self.broker = instance.messageBrokerManager.get('redis')
+
         gevent.spawn(self.messageProcessTask)
 
     def onConnected(self,conn,address):
@@ -81,13 +85,16 @@ class SmartAdapter(ConnectionEventHandler):
         # 断开连接删除设备与接入服务器的映射
         self.redis.delete(constants.DeviceServerRel.format(self.device_id))
 
-        if self.iot_controller:
-            self.iot_controller.onDeviceDisconnected()
+        # if self.iot_controller:
+        #     self.iot_controller.onDeviceDisconnected()
+        if self.channel_down:
+            self.channel_down.close()
 
 
 
     def onData(self,conn,data):
-        self.logger.debug("device data retrieve in . {} {}".format(self.device_id, self.device_type))
+        self.logger.debug("<< Device Data Retrieve in . {} {}".format(self.device_id, self.device_type))
+        self.logger.debug(data)
         json_text_list = self.accumulator.enqueue(data)
 
         # dump = self.hex_dump(bytes)
@@ -124,7 +131,7 @@ class SmartAdapter(ConnectionEventHandler):
         """ 处理来自设备上行的消息
         """
         # self.logger.debug( str( message.__class__ ))
-        self.logger.debug('{} conn:{}'.format(str(self),str(self.conn)))
+        self.logger.debug('{} conn:{}'.format(str(message),str(self.conn)))
         # self.logger.debug(message.__class__.__name__+' device_type:{} device_id:{} message type:0x{:02x} '.format(self.device_type,self.device_id,message.Type.value))
         # self.logger.debug(
         #     message.__class__.__name__ + ' device_type:{} device_id:{} content: {} '.format(self.device_type,
@@ -148,7 +155,13 @@ class SmartAdapter(ConnectionEventHandler):
         message.device_id = self.device_id
         # message.device_type = self.device_type
 
-        self.postMessageIoT(message)  # 将设备信息分发到 绿城+SDK --> iot
+        # self.postMessageIoT(message)  # 将设备信息分发到 绿城+SDK --> iot
+
+        # 发布到app接收通道
+        device_id = message.device_id
+        name = constants.DeviceChannelPubTraverseUp.format(device_id=device_id)
+        self.broker.conn.publish(name, message.marshall(''))
+
 
         # if isinstance(message,MessageHeartBeat):
         #     self.handleHeartbeat(message)
@@ -198,7 +211,26 @@ class SmartAdapter(ConnectionEventHandler):
         data = message.params
         self.redis.hmset(name,data)
 
-        self.iot_controller.onMessageSensorStatus( message )
+        # 发布到华为iot
+        # self.iot_controller.onMessageSensorStatus( message )
+
+        sensor = model.Sensor.get(device_id=message.device_id,id=message.sensor_id,type=message.sensor_type)
+        if not sensor:
+            sensor = model.Sensor()
+            sensor.id = message.sensor_id
+            sensor.type = message.sensor_type
+            sensor.device_id = message.device_id
+        params={}
+        if sensor.params: # 合并新老的状态参数值
+            try:
+                params = json.loads(sensor.params)
+                params.update(params)
+            except: pass
+
+        params.update(message.params)
+        jsondata = json.dumps(params)
+        sensor.params = jsondata
+        sensor.save()
 
         # 写入日志
         log = model.LogSensorStatus()
@@ -206,9 +238,12 @@ class SmartAdapter(ConnectionEventHandler):
         log.sys_time = timestamp_current()
         log.sensor_id = message.sensor_id
         log.sensor_type = message.sensor_type
+        log.datetime = datetime.datetime.now()
         log.assign(message.params)
         # log.params = json.dumps( message.params )
         log.save()
+
+
 
     def handleDeviceLogInfo(self,message = MessageDeviceLogInfo()):
         log = model.LogDeviceLogInfo()
@@ -231,6 +266,7 @@ class SmartAdapter(ConnectionEventHandler):
 
     def postMessageIoT(self,message):
         # 设备登陆上线和状态需发送给绿城+ SDK
+        return
         if not isinstance(message,(MessageSensorStatus,MessageLogin)):
             return
 
@@ -279,12 +315,25 @@ class SmartAdapter(ConnectionEventHandler):
         sleep = self.cfgs.get('heartbeat', 10)
         while self.running:
             gevent.sleep( sleep )
+            if not self.running:
+                break
             self.traverseDown(MessageHeartBeat())
 
+    def onTraverseMessage(self,data,ctx):
+        """接收到平台服务发送的下行的消息，转发到下行的设备连接对端"""
+        message = parseMessage(data)
+        self.traverseDown(message)
 
+    def subscribeTraverseDownMessage(self):
+        """订阅下行控制命令"""
+        broker = instance.messageBrokerManager.get('redis')
+        name = constants.DeviceChannelPubTraverseDown.format(device_id = self.device_id)
+
+        self.channel_down = broker.createPubsubChannel(name, self.onTraverseMessage)
+        self.channel_down.open()
 
     def onActive(self):
-        """设备在线登录了"""
+        """设备在线登录, 订阅本设备下行的消息"""
         self.logger.debug('device onActive. {} {}'.format(self.device_type, self.device_id))
         self.active = True
         gevent.spawn(self.threadHeartbeat)  # 定时心跳发送
@@ -316,12 +365,24 @@ class SmartAdapter(ConnectionEventHandler):
 
         self.service.deviceOnline(self)
 
+        self.subscribeTraverseDownMessage()
         # 创建到华为iot的通道
-        self.iot_controller = iot.IotController(self)
-        self.iot_controller.onActive()
+        # self.iot_controller = iot.IotController(self)
+        # self.iot_controller.onActive()
 
         # 设备上线，即刻发送设备状态查询
         self.traverseDown(MessageDeviceStatusQuery())
+
+        # 要求设备返回所有状态 20190630
+        msg_sensor_query = MessageSensorStatusQuery()
+        msg_sensor_query.sensor_type = 0
+        msg_sensor_query.sensor_id = 0
+        self.traverseDown(msg_sensor_query)
+
+        # 发送设备profile上报请求
+        msg_upload_profile = MessageDeviceCommand()
+        msg_upload_profile.command = 'upload_profile'
+        self.traverseDown(msg_upload_profile)
 
 
     def traverseDown(self,message):

@@ -74,15 +74,18 @@ enum CallPeerType{
 	
 };
 
-#ifdef _LINUX
+#ifdef _ARM
 #define SETTINGS_FILE "/home/smartbox/settings.txt"
 #define SETTINGS_USER_FILE "/home/smartbox/settings.user"
+#define HOME_PATH "/home/smartbox"
 #else
 #define SETTINGS_FILE "settings.txt"
 #define SETTINGS_USER_FILE "settings.user"
+#define HOME_PATH "."
 #endif
 
 
+#define TEST 0
 
 //}
 

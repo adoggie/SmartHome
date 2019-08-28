@@ -43,16 +43,25 @@ class Connection():
         # response = 'HTTP/1.1 200 OK\r\nST: %s\r\n\r\n' % SERVICE_NAME
         print self.__data
         print 'get discover ..'
-        response = \
-            """NOTIFY * HTTP/1.1\r\n"""\
-            """HOST: 239.255.255.250:1900\r\n"""\
-            """NT: homebase:device\r\n"""\
-            """NTS: ssdp:alive\r\n"""\
-            """USN: uuid:f40c2981-7329-40b7-8b04-27f187aecfb8\r\n"""\
-            """LOCATION: http://192.168.14.17:8080\r\n"""\
-            """CACHE-CONTROL: max-age=1800\r\n"""\
-            """DEVICE_TYPE: bridge\r\n\r\n"""
+        # response = \
+        #     """NOTIFY * HTTP/1.1\r\n"""\
+        #     """HOST: 239.255.255.250:1900\r\n"""\
+        #     """NT: homebase:device\r\n"""\
+        #     """NTS: ssdp:alive\r\n"""\
+        #     """USN: uuid:f40c2981-7329-40b7-8b04-27f187aecfb8\r\n"""\
+        #     """LOCATION: http://192.168.0.110:8080\r\n"""\
+        #     """CACHE-CONTROL: max-age=1800\r\n"""\
+        #     """DEVICE_TYPE: bridge\r\n\r\n"""
 
+        response = \
+            """NOTIFY * HTTP/1.1\r\n""" \
+            """HOST: 239.255.255.250:1900\r\n""" \
+            """NT: homebase:device\r\n""" \
+            """NTS: ssdp:alive\r\n""" \
+            """USN: uuid:f40c2981-7399-40b7-8b04-27f187aecfb8\r\n""" \
+            """LOCATION: http://192.168.14.7:8080\r\n""" \
+            """CACHE-CONTROL: max-age=1800\r\n""" \
+            """DEVICE_TYPE: bridge\r\n\r\n"""
         self.__s.sendto(response, self.__addr)
 
     def __handle_ok(self):
@@ -128,5 +137,6 @@ class SSDPServer():
 
 
 if __name__ == '__main__':
-    port = SSDPServer("192.168.14.17")
+    # port = SSDPServer("192.168.14.17")
+    port = SSDPServer("192.168.14.7")
     port.start()

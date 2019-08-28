@@ -1,0 +1,26 @@
+
+v0.1.1 20190630
+=====
+1. 上报设备profile 支持
+
+v0.1.2  2019/7/8
+1. connection.cpp   send() 增加互斥锁
+
+
+v0.1.3  2019/7/8
+1. connection.cpp
+   async_write() 导致写入数据丢失 ，改成  write() 同步写入
+   async_read()  同步读
+     "async_read_until(sock_,streambuf_,"\0","
+     >>>
+     "
+     char sp[2] ={SP_,0};
+     async_read_until(sock_,streambuf_,sp,
+     "
+
+v0.1.4  2019/7/10
+1. 连接上mcu-proxy 时发送sensor查询请求，要求mcu上报所有设备的状态
+
+v0.1.5  2019/7/11
+1. 增加 DeviceCommand 消息处理包
+2. 连接成功取消自动上报profile ，响应Command包类型为  upload_profile 时进行上报profile

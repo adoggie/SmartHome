@@ -1,0 +1,213 @@
+{
+  "id": "9901",
+  "name": "house-template-1",
+  "version": "1.0.0",
+  "author": "scott",
+  "project_id": "9999",
+  "garden_id": "home",
+  "manufacture": "fanbei-smart",
+  "house": {
+    "name": "泛海"
+  },
+  "rooms": {
+    "A": {
+      "name": "客厅"
+    },
+    "B": {
+      "name": "主卧"
+    }
+  },
+  "sensor_defines": [
+    {
+      "name": "灯",
+      "type": 2,
+      "vendor": "Panasonic",
+      "model": "YJ-911",
+      "features": {
+        "switch": {
+          "name": "开关",
+          "id": 1,
+          "value_type": {
+            "name": "enum",
+            "items": [
+              "on",
+              "off"
+            ],
+            "default": "off"
+          },
+          "commands": {
+            "on": {
+              "name": "开",
+              "value": 1
+            },
+            "off": {
+              "name": "关",
+              "value": 0
+            }
+          }
+        }
+
+      }
+    },
+
+    {
+      "name": "窗帘",
+      "type": 1,
+      "vendor": "Panasonic",
+      "model": "YJ-911",
+      "features": {
+        "switch": {
+          "name": "开关",
+          "id": 1,
+          "value_type": {
+            "name": "enum",
+            "items": [
+              "on",
+              "off",
+              "stop"
+            ],
+            "default": "off"
+          },
+          "commands": {
+            "on": {
+              "name": "开",
+              "value": 1
+            },
+            "off": {
+              "name": "关",
+              "value": 2
+            },
+            "stop": {
+              "name": "停止",
+              "value": 0
+            }
+          }
+        }
+      }
+    },
+
+    {
+      "name": "空调",
+      "type": 3,
+      "vendor": "Panasonic",
+      "model": "YJ-911",
+      "features": {
+        "switch": {
+          "name": "开关",
+          "id": 1,
+          "value_type": {
+            "name": "enum",
+            "items": [
+              "on",
+              "off"
+            ],
+            "default": "off"
+          },
+          "commands": {
+            "on": {
+              "name": "开",
+              "value": 2
+            },
+            "off": {
+              "name": "关",
+              "value": 1
+            }
+          }
+        }
+      }
+
+    }
+
+  ],
+  "sensors": [
+
+        {
+            "type": 2,
+            "id": 8,
+            "room_id": "A",
+            "name": "客厅筒灯"
+        },
+        {
+            "type": 2,
+            "id": 9,
+            "room_id": "A",
+            "name": "客厅灯带"
+        },
+        {
+            "type": 2,
+            "id": 10,
+            "room_id": "A",
+            "name": "客厅主灯"
+        },
+
+    {
+      "type": 2,
+      "id": 12,
+      "room_id": "B",
+      "name": "主卧筒灯"
+    },
+    {
+      "type": 2,
+      "id": 13,
+      "room_id": "B",
+      "name": "主卧灯带"
+    },
+    {
+        "type": 2,
+        "id": 14,
+        "room_id": "B",
+        "name": "主卧主灯"
+      },
+    {
+      "type": 2,
+      "id": 21,
+      "room_id": "A",
+      "name": "主卧所有灯"
+    },
+    {
+      "type": 2,
+      "id": 22,
+      "room_id": "B",
+      "name": "客厅所有灯"
+    },
+
+    {
+          "type": 1,
+          "id": 1,
+          "room_id": "A",
+          "name": "客厅布帘"
+      },
+      {
+          "type": 1,
+          "id": 2,
+          "room_id": "A",
+          "name": "客厅纱帘"
+      },
+      {
+          "type": 1,
+          "id": 3,
+          "room_id": "B",
+          "name": "主卧布帘"
+      },
+      {
+          "type": 1,
+          "id": 4,
+          "room_id": "B",
+          "name": "主卧纱帘"
+      },
+
+    {
+            "type": 3,
+            "id": 5,
+            "room_id": "B",
+            "name": "主卧空调"
+        },
+    {
+      "type": 3,
+      "id": 6,
+      "room_id": "A",
+      "name": "客厅空调"
+    }
+
+  ]
+}

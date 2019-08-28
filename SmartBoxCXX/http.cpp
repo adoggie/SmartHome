@@ -214,12 +214,12 @@ void HttpService::handle_sensor_status_query(struct mg_connection *nc, struct ht
 }
 
 // 上报 端设备状态 ( 测试 )
-void HttpService::handle_sensor_status_upload(struct mg_connection *nc, struct http_message *hm ){
+void HttpService::handle_sensor_status_generate(struct mg_connection *nc, struct http_message *hm ){
     PropertyStringMap values;
-    std::string sensor_type = http_get_var(hm,"sensor_type");
-    std::string sensor_id = http_get_var(hm,"sensor_id");
-    std::string name = http_get_var(hm,"name");
-    std::string value = http_get_var(hm,"value");
+    std::string sensor_type = http_get_query_var(hm,"sensor_type");
+    std::string sensor_id = http_get_query_var(hm,"sensor_id");
+    std::string name = http_get_query_var(hm,"name");
+    std::string value = http_get_query_var(hm,"value");
 
     std::shared_ptr<MessageSensorStatus> status = std::make_shared<MessageSensorStatus>();
     status->sensor_id = boost::lexical_cast<int>(sensor_id);
@@ -318,8 +318,8 @@ void HttpService::ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                     http->handle_sensor_status_query(nc, hm);
                 } else if (mg_vcmp(&hm->uri, "/api/smartbox/profile") == 0) { // 设备profile 查询
                     http->handle_profile_get(nc, hm);
-                } else if (mg_vcmp(&hm->uri, "/api/smartbox/sensor/status/upload") == 0) { // 设备profile 查询
-                    http->handle_sensor_status_upload(nc, hm);
+                } else if (mg_vcmp(&hm->uri, "/api/smartbox/sensor/status/generate") == 0) { // 生成设备状态数据
+                    http->handle_sensor_status_generate(nc, hm);
                 } else {
                     mg_serve_http(nc, hm, s_http_server_opts); /* Serve static content */
                 }

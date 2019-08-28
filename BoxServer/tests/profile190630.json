@@ -1,0 +1,1093 @@
+{
+    "id": "9901",
+    "name": "house-template-1",
+    "version": "1.0.0",
+    "author": "scott",
+    "project_id": "9999",
+    "garden_id": "home",
+    "manufacture": "fanbei-smart",
+    "house": {
+    "name": "我的家"
+    },
+    "rooms": {
+        "A": {
+            "name": "客厅"
+        },
+        "B": {
+            "name": "主卧"
+        },
+        "C": {
+            "name": "次卧1"
+        },
+        "D": {
+            "name": "次卧2"
+        },
+        "E": {
+            "name": "餐厅"
+        },
+        "F": {
+            "name": "书房"
+        },
+        "G": {
+            "name": "玄关"
+        },
+        "H": {
+            "name": "厨房"
+        },
+        "I": {
+            "name": "阳台"
+        }
+    },
+    "sensor_defines": [
+        {
+            "name": "灯",
+            "type": 2,
+            "vendor": "Panasonic",
+            "model": "YJ-911",
+            "features": {
+                "switch": {
+                    "name": "开关",
+                    "id": 1,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "开",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "关",
+                            "value": 0
+                        }
+                    }
+                },
+                "brightness": {
+                    "name": "调光",
+                    "id": 2,
+                    "value_type": {
+                        "name": "num",
+                        "start": 0,
+                        "end": 100,
+                        "step": 10,
+                        "default": 0
+                    },
+                    "commands": {
+                        "max": {
+                            "name": "最亮",
+                            "value": 100
+                        },
+                        "min": {
+                            "name": "最暗",
+                            "value": 0
+                        },
+                        "up": {
+                            "name": "增亮",
+                            "value": "102"
+                        },
+                        "down": {
+                            "name": "减暗",
+                            "value": "101"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "窗帘",
+            "type": 1,
+            "vendor": "Panasonic",
+            "model": "YJ-911",
+            "features": {
+                "switch": {
+                    "name": "开关",
+                    "id": 1,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off",
+                            "stop"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "开",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "关",
+                            "value": 0
+                        },
+                        "stop": {
+                            "name": "停止",
+                            "value": 2
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "空调",
+            "type": 3,
+            "vendor": "Panasonic",
+            "model": "YJ-911",
+            "features": {
+                "switch": {
+                    "name": "开关",
+                    "id": 1,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "开",
+                            "value": 2
+                        },
+                        "off": {
+                            "name": "关",
+                            "value": 1
+                        }
+                    }
+                },
+                "speed": {
+                    "name": "风速",
+                    "id": 2,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "low",
+                            "medium",
+                            "high"
+                        ],
+                        "default": "low"
+                    },
+                    "commands": {
+                        "low": {
+                            "name": "低速",
+                            "value": "1"
+                        },
+                        "medium": {
+                            "name": "中速",
+                            "value": "2"
+                        },
+                        "high": {
+                            "name": "高速速",
+                            "value": "3"
+                        }
+                    }
+                },
+                "mode": {
+                    "name": "模式",
+                    "id": 3,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "cool",
+                            "heat",
+                            "dry",
+                            "fan"
+                        ],
+                        "default": "cool"
+                    },
+                    "commands": {
+                        "cool": {
+                            "name": "制冷",
+                            "value": "1"
+                        },
+                        "heat": {
+                            "name": "制热",
+                            "value": "2"
+                        },
+                        "dry": {
+                            "name": "除湿",
+                            "value": "3"
+                        },
+                        "fan": {
+                            "name": "送风",
+                            "value": "4"
+                        }
+                    }
+                },
+                "temp": {
+                    "name": "温度",
+                    "id": 4,
+                    "value_type": {
+                        "name": "num",
+                        "start": 17,
+                        "end": 35,
+                        "step": 1,
+                        "default": 29
+                    },
+                    "commands": {
+                        "up": {
+                            "name": "升温",
+                            "value": "101"
+                        },
+                        "down": {
+                            "name": "降温",
+                            "value": "102"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "地暖",
+            "type": 4,
+            "vendor": "Panasonic",
+            "model": "YJ-911",
+            "features": {
+                "switch": {
+                    "name": "开关",
+                    "id": 1,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "开",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "关",
+                            "value": 0
+                        }
+                    }
+                },
+                "temp": {
+                    "name": "温度",
+                    "id": 4,
+                    "value_type": {
+                        "name": "num",
+                        "start": 17,
+                        "end": 35,
+                        "step": 1,
+                        "default": 29
+                    },
+                    "commands": {
+                        "up": {
+                            "name": "升温",
+                            "value": "101"
+                        },
+                        "down": {
+                            "name": "降温",
+                            "value": "102"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "新风",
+            "type": 5,
+            "vendor": "Panasonic",
+            "model": "YJ-911",
+            "features": {
+                "switch": {
+                    "name": "模式",
+                    "id": 1,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "dehumidity",
+                            "adhumidity"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "关闭",
+                            "value": 0
+                        },
+                        "dehumidity": {
+                            "name": "除湿",
+                            "value": 1
+                        },
+                        "adhumidity": {
+                            "name": "加湿",
+                            "value": 2
+                        }
+                    }
+                },
+                "IN_PM2.5": {
+                    "name": "室内PM2.5",
+                    "id": 2,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "优",
+                            "良",
+                            "轻度污染",
+                            "中度污染",
+                            "重度污染"
+                        ],
+                        "default": "优"
+                    },
+                    "commands": {
+                        "优": {
+                            "name": "优",
+                            "value": 1
+                        },
+                        "良": {
+                            "name": "良",
+                            "value": 2
+                        },
+                        "轻度污染": {
+                            "name": "轻度污染",
+                            "value": 3
+                        },
+                        "中度污染": {
+                            "name": "中度污染",
+                            "value": 4
+                        },
+                        "重度污染": {
+                            "name": "重度污染",
+                            "value": 5
+                        }
+                    }
+                },
+                "CO2": {
+                    "name": "二氧化碳",
+                    "id": 3
+                },
+                "humidity": {
+                    "name": "湿度",
+                    "id": 4
+                },
+                "tem": {
+                    "name": "温度",
+                    "id": 5
+                },
+                "OUT_PM2.5": {
+                    "name": "室外PM2.5",
+                    "id": 6,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "优",
+                            "良",
+                            "轻度污染",
+                            "中度污染",
+                            "重度污染"
+                        ],
+                        "default": "优"
+                    },
+                    "commands": {
+                        "优": {
+                            "name": "优",
+                            "value": 1
+                        },
+                        "良": {
+                            "name": "良",
+                            "value": 2
+                        },
+                        "轻度污染": {
+                            "name": "轻度污染",
+                            "value": 3
+                        },
+                        "中度污染": {
+                            "name": "中度污染",
+                            "value": 4
+                        },
+                        "重度污染": {
+                            "name": "重度污染",
+                            "value": 5
+                        }
+                    }
+                }
+            }
+        }      
+    ],
+    "scene_defines":[
+    	 {
+            "name": "场景",
+            "type": 6,
+            "vendor": "Panasonic",
+            "model": "YJ-911",
+            "feaures": {
+                "GO_Home": {
+                    "name": "回家",
+                    "id": 1,
+                     "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "L_home": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "S_home": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                },
+                "Leave_Home": {
+                    "name": "离家",
+                    "id": 2,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "L_home": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "S_home": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                },
+                "dinner": {
+                    "name": "晚宴模式",
+                    "id": 3,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                },
+                "film": {
+                    "name": "观影模式",
+                    "id": 4,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                },
+                "air_open": {
+                    "name": "空调全开",
+                    "id": 5,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                },
+				"air_close": {
+                    "name": "空调全关",
+                    "id": 6,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                },
+                "heat_open": {
+                    "name": "地热全开",
+                    "id": 7,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                },
+				"heat_close": {
+                    "name": "地热全关",
+                    "id": 8,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                },
+                "light_open": {
+                    "name": "灯光全开",
+                    "id": 9,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                },
+				"light_close": {
+                    "name": "灯光全开",
+                    "id": 10,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "on": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "off": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                },
+                "Leave": {
+                    "name": "离开",
+                    "id": 11,
+                    "value_type": {
+                        "name": "enum",
+                        "items": [
+                            "on",
+                            "off"
+                        ],
+                        "default": "off"
+                    },
+                    "commands": {
+                        "L_home": {
+                            "name": "执行",
+                            "value": 1
+                        },
+                        "S_home": {
+                            "name": "保存",
+                            "value": 0
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    
+    "sensors": [
+    	
+        {
+            "type": 1,
+            "id": 1,
+            "room_id": "A",
+            "name": "客厅布帘1"
+        },
+        {
+            "type": 1,
+            "id": 2,
+            "room_id": "A",
+            "name": "客厅纱帘1"
+        },
+        {
+            "type": 1,
+            "id": 3,
+            "room_id": "B",
+            "name": "主卧布帘"
+        },
+        {
+            "type": 1,
+            "id": 4,
+            "room_id": "B",
+            "name": "主卧纱帘"
+        },
+        {
+            "type": 1,
+            "id": 5,
+            "room_id": "A",
+            "name": "客厅布帘2"
+        },
+        {
+            "type": 1,
+            "id": 6,
+            "room_id": "A",
+            "name": "客厅纱帘2"
+        },
+        {
+            "type": 2,
+            "id": 1,
+            "room_id": "A",
+            "name": "客厅筒灯"
+        },
+        {
+            "type": 2,
+            "id": 2,
+            "room_id": "A",
+            "name": "客厅灯带"
+        },
+        {
+            "type": 2,
+            "id": 3,
+            "room_id": "E",
+            "name": "餐厅灯带"
+        },
+        {
+            "type": 2,
+            "id": 4,
+            "room_id": "E",
+            "name": "餐厅筒灯"
+        },
+        {
+            "type": 2,
+            "id": 5,
+            "room_id": "B",
+            "name": "主卧吊灯"
+        },
+        {
+            "type": 2,
+            "id": 6,
+            "room_id": "B",
+            "name": "主卧灯带"
+        },
+        {
+            "type": 2,
+            "id": 7,
+            "room_id": "B",
+            "name": "主卧筒灯"
+        },
+        {
+            "type": 2,
+            "id": 8,
+            "room_id": "G",
+            "name": "玄关筒灯"
+        },
+        {
+            "type": 2,
+            "id": 9,
+            "room_id": "G",
+            "name": "玄关灯带"
+        },
+        {
+            "type": 2,
+            "id": 10,
+            "room_id": "G",
+            "name": "玄关吊灯"
+        },
+        {
+            "type": 2,
+            "id": 11,
+            "room_id": "A",
+            "name": "客厅吊灯"
+        },
+        {
+            "type": 2,
+            "id": 12,
+            "room_id": "E",
+            "name": "餐厅吊灯"
+        },
+        {
+            "type": 2,
+            "id": 100,
+            "room_id": "A",
+            "name": "客厅酒柜射灯"
+        },
+        {
+            "type": 2,
+            "id": 101,
+            "room_id": "D",
+            "name": "次卧2过道筒灯"
+        },
+        {
+            "type": 2,
+            "id": 102,
+            "room_id": "D",
+            "name": "次卧2筒灯"
+        },
+        {
+            "type": 2,
+            "id": 103,
+            "room_id": "D",
+            "name": "次卧2吊灯"
+        },
+        {
+            "type": 2,
+            "id": 104,
+            "room_id": "D",
+            "name": "次卧2灯带"
+        },
+        {
+            "type": 2,
+            "id": 105,
+            "room_id": "C",
+            "name": "次卧1吊灯"
+        },
+        {
+            "type": 2,
+            "id": 106,
+            "room_id": "C",
+            "name": "次卧1过道筒灯"
+        },
+        {
+            "type": 2,
+            "id": 107,
+            "room_id": "C",
+            "name": "次卧1灯带"
+        },
+        {
+            "type": 2,
+            "id": 108,
+            "room_id": "C",
+            "name": "次卧1过道筒灯"
+        },
+        {
+            "type": 2,
+            "id": 109,
+            "room_id": "F",
+            "name": "书房灯带"
+        },
+        {
+            "type": 2,
+            "id": 110,
+            "room_id": "F",
+            "name": "书房筒灯"
+        },
+        {
+            "type": 2,
+            "id": 111,
+            "room_id": "A",
+            "name": "非智能化"
+        },
+        {
+            "type": 2,
+            "id": 112,
+            "room_id": "F",
+            "name": "书房吊灯"
+        },
+        {
+            "type": 2,
+            "id": 113,
+            "room_id": "B",
+            "name": "主卧过道灯"
+        },
+        {
+            "type": 2,
+            "id": 114,
+            "room_id": "A",
+            "name": "客厅阳台"
+        },
+        {
+            "type": 2,
+            "id": 115,
+            "room_id": "D",
+            "name": "次卧2阳台"
+        },
+        {
+            "type": 2,
+            "id": 116,
+            "room_id": "H",
+            "name": "厨房主灯"
+        },
+        {
+            "type": 2,
+            "id": 117,
+            "room_id": "H",
+            "name": "厨房灯带"
+        },
+        {
+            "type": 2,
+            "id": 118,
+            "room_id": "H",
+            "name": "厨房筒灯"
+        },
+        {
+            "type": 2,
+            "id": 119,
+            "room_id": "C",
+            "name": "次卧1夜灯"
+        },
+        {
+            "type": 2,
+            "id": 120,
+            "room_id": "B",
+            "name": "主卧夜灯"
+        },
+        {
+            "type": 2,
+            "id": 121,
+            "room_id": "D",
+            "name": "次卧2夜灯"
+        },
+        {
+            "type": 2,
+            "id": 122,
+            "room_id": "D",
+            "name": "次卧2阳台灯带"
+        },
+        {
+            "type": 3,
+            "id": 1,
+            "room_id": "H",
+            "name": "厨房空调"
+        },
+        {
+            "type": 3,
+            "id": 2,
+            "room_id": "E",
+            "name": "餐厅空调"
+        },
+        {
+            "type": 3,
+            "id": 3,
+            "room_id": "C",
+            "name": "次卧1空调"
+        },
+        {
+            "type": 3,
+            "id": 4,
+            "room_id": "F",
+            "name": "书房空调"
+        },
+        {
+            "type": 3,
+            "id": 5,
+            "room_id": "B",
+            "name": "主卫空调"
+        },
+        {
+            "type": 3,
+            "id": 6,
+            "room_id": "B",
+            "name": "主卧空调"
+        },
+        {
+            "type": 3,
+            "id": 7,
+            "room_id": "A",
+            "name": "客厅1空调"
+        },
+        {
+            "type": 3,
+            "id": 8,
+            "room_id": "A",
+            "name": "客厅2空调"
+        },
+        {
+            "type": 3,
+            "id": 9,
+            "room_id": "D",
+            "name": "卧室2空调"
+        },
+        {
+            "type": 3,
+            "id": 10,
+            "room_id": "G",
+            "name": "保姆房空调"
+        },
+        {
+            "type": 4,
+            "id": 1,
+            "room_id": "B",
+            "name": "主卧地暖"
+        },
+        {
+            "type": 4,
+            "id": 2,
+            "room_id": "C",
+            "name": "次卧1地暖"
+        },
+        {
+            "type": 4,
+            "id": 3,
+            "room_id": "D",
+            "name": "次卧2地暖"
+        },
+        {
+            "type": 4,
+            "id": 4,
+            "room_id": "I",
+            "name": "阳台地暖"
+        },
+        {
+            "type": 4,
+            "id": 5,
+            "room_id": "A",
+            "name": "客厅地暖"
+        },
+        {
+            "type": 4,
+            "id": 6,
+            "room_id": "E",
+            "name": "餐厅地暖"
+        },
+        {
+            "type": 4,
+            "id": 7,
+            "room_id": "F",
+            "name": "书房地暖"
+        },
+        {
+            "type": 4,
+            "id": 8,
+            "room_id": "H",
+            "name": "厨房地暖"
+        },
+        {
+            "type": 5,
+            "id": 1,
+            "room_id": "A",
+            "name": "新风"
+        }   
+    ],
+    
+    "scenes" :[
+    	  {
+            "type": 6,
+            "id": 1,
+            "name": "回家模式"
+        },
+        {
+            "type": 6,
+            "id": 2,
+            "name": "离家模式"
+        },
+        {
+            "type": 6,
+            "id": 3,
+            "name": "晚宴模式"
+        },
+        {
+            "type": 6,
+            "id": 4,
+            "name": "观影模式"
+        },
+        {
+            "type": 6,
+            "id": 5,
+            "name": "空调全开"
+        },
+		 {
+            "type": 6,
+            "id": 6,
+            "name": "空调全关"
+        },
+        {
+            "type": 6,
+            "id": 7,
+            "name": "地热全开"
+        },
+		{
+            "type": 6,
+            "id": 8,
+            "name": "地热全关"
+        },
+        {
+            "type": 6,
+            "id": 9,
+            "name": "灯光全开"
+        },
+		 {
+            "type": 6,
+            "id": 10,
+            "name": "灯光全关"
+        },
+        {
+            "type": 6,
+            "id": 11,
+            "name": "离开模式"
+        }
+    ]
+}

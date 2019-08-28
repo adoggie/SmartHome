@@ -16,7 +16,8 @@ std::vector<ParseFunc> parse_func_list={
 //		MessageSensorStatus::parse,
 		MessageSensorValueSet::parse,
 
-		MessageAppJoinRequest::parse
+		MessageAppJoinRequest::parse,
+		MessageDeviceCommand::parse
 
 };
 
@@ -62,6 +63,28 @@ std::shared_ptr<Message> MessageDeviceStatusQuery::parse(const Json::Value& root
 		result = msg ;
 	}
 	return std::shared_ptr<MessageDeviceStatusQuery>();
+}
+
+std::shared_ptr<Message> MessageDeviceCommand::parse(const Json::Value& root){
+    std::shared_ptr<Message> result;
+    if( root["name"].asString() ==  MESSAGE_COMMAND_DOWN){
+        std::shared_ptr<MessageDeviceCommand> msg = std::make_shared<MessageDeviceCommand>();
+        Json::Value values = root["values"];
+        msg->type = values["mod_type"].asString();
+        msg->command = values["command"].asString();
+
+        auto node = values["params"];
+        if(node.isObject()){
+            auto names = node.getMemberNames();
+            for(auto & key : names){
+                auto value = node[key].asString();
+                msg->params[key] = value;
+            }
+        }
+        msg->MessageTraverse::unmarshall(values);
+        result = msg ;
+    }
+    return std::shared_ptr<MessageDeviceStatusQuery>();
 }
 
 std::shared_ptr<MessagePayload> MessageDeviceStatusQuery::asPayload() const{

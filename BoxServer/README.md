@@ -20,3 +20,19 @@ BoxServer
 
 1. settings.yaml 的 redis/datasource 配置接收来自 iot的消息队列  pubsub (iot_data_chan/handlers.iot.get_message)
 2. 外部系统通过http的接口接收控制指令并下发到线下设备端
+
+
+### 订阅通道
+
+```json
+   
+"smartbox.subs.DEVICE-ID"
+1. app 接收设备消息
+2. 接入服务器转发设备状态消息
+
+
+"DEVICE-ID"
+1. iot 接收消息
+2. 接入服务器转发设备状态消息   
+
+```

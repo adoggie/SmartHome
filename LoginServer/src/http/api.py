@@ -76,12 +76,20 @@ def device_login():
     data = dict(id=id_,type=type_,ver=ver,time=time,auth_time=timestamp_current())
 
     token = device_token_create(data,device.secret_key)
-    server = model.DeviceServer.get(id=device.server_id)
-    if not server:
-        return ErrorReturn(ErrorDefs.DeviceServerNotFound).response
 
-    result = dict( token = token, server_ip = server.ip, server_port = server.port ,
-        server_time = timestamp_current()
-    )
+    main = instance.serviceManager.get('main')
+    boxserver = main.getConfig().get('boxserver')
+    host,port = boxserver.split(':')
+    result = dict(token=token, server_ip=host, server_port=int(port),
+                  server_time=timestamp_current()
+                  )
+
+    # server = model.DeviceServer.get(id=device.server_id)
+    # if not server:
+    #     return ErrorReturn(ErrorDefs.DeviceServerNotFound).response
+    #
+    # result = dict( token = token, server_ip = server.ip, server_port = server.port ,
+    #     server_time = timestamp_current()
+    # )
 
     return CR(result= result).response

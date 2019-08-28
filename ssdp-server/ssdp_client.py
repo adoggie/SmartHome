@@ -8,8 +8,8 @@ import ssdp_server
 SSDP_ADDR = '239.255.255.250'
 SSDP_PORT = 1900
 
-MS = 'M-SEARCH * HTTP/1.1\r\nHOST: %s:%d\r\nMAN: "ssdp:discover"\r\nMX: 2\r\nST: ssdp:all\r\n\r\n' \
-     % (SSDP_ADDR, SSDP_PORT)
+MS = 'M-SEARCH * HTTP/1.1\r\nHOST: %s:%d\r\nMAN: "ssdp:discover"\r\nMX: 2\r\nST: ssdp:all\r\n\r\n' % (SSDP_ADDR, SSDP_PORT)
+# MS = 'M-SEARCH * HTTP/1.1\r\nHOST: %s:%d\r\nMAN: "ssdp:discover"\r\nMX: 2\r\nST: fanbei-smarthome:device\r\n\r\n' % (SSDP_ADDR, SSDP_PORT)
 
 
 class SSDPClient():

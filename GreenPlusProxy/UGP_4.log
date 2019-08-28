@@ -1,0 +1,295 @@
+19-05-02 15:25:39 UGP INF: thread(0x1f1f5f0)GhostThread create ok
+19-05-02 15:25:39 IOTA_BIND INF: Iota_BindInit.
+19-05-02 15:25:39 IOTA_LOGIN INF: Iota_LoginInit.
+19-05-02 15:25:39 IOTA_DATATRANS INF: Iota_DataTransInit.
+19-05-02 15:26:01 UGP INF: ucfg id:57 name:4 dir:2 val2:0 117.**.**.187
+19-05-02 15:26:01 UGP INF: ucfg id:49 name:1 dir:2 val2:0 117.**.**.187
+19-05-02 15:26:01 UGP INF: ucfg id:12 name:1 dir:2 val2:0 117.**.**.187
+19-05-02 15:26:01 BIND INF: UBindFsm(1)[0:IDLE] run PSA(0) msg(0:BIND_IOCM) to [WAIT_RSP] ok
+19-05-02 15:26:01 TLS INF: tls method use 3, old 0
+19-05-02 15:26:01 TLS INF: tlslib trustCaFile[/var/green/data/FBXDDD0001/conf/rootcert.pem] trustCaPath[(null)]
+19-05-02 15:26:01 TLS ERR: tlslib trust ca file err.
+19-05-02 15:26:01 SCK INF: sock(1) HTTP(2) mode:1 type:4 open 192.***.**.105 :58953
+19-05-02 15:26:01 SCK INF: sock(1) cretls ret:0
+19-05-02 15:26:01 SCK INF: sock(1) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:26:01 HTTP INF: UHttpFsm(2)[0:IDLE] run BIND(1) msg(0:USER_REQ) to [CONNECTING] ok
+19-05-02 15:26:01 SCK INF: sock(1) 117.**.**.187 :8943 preconnect
+19-05-02 15:26:01 HTTP INF: UHttpFsm(2)[1:CONNECTING] run SCK(1) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:26:01 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:26:01 SCK INF: sock(1) disc lasterr:20
+19-05-02 15:26:01 HTTP INF: UHttpFsm(2)[1:CONNECTING] run SCK(1) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:26:01 SCK INF: sock(1) close
+19-05-02 15:26:01 TLS INF: tls method use 3, old 0
+19-05-02 15:26:01 TLS INF: tls use same ctx.
+19-05-02 15:26:01 SCK INF: sock(2) HTTP(2) mode:1 type:4 open 192.***.**.105 :45330
+19-05-02 15:26:01 SCK INF: sock(2) cretls ret:0
+19-05-02 15:26:01 SCK INF: sock(2) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:26:01 HTTP INF: UHttpFsm(2)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:26:01 SCK INF: sock(1) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:26:01 SCK INF: sock(1) deltls ret:0
+19-05-02 15:26:01 SCK INF: sock(2) 117.**.**.187 :8943 preconnect
+19-05-02 15:26:01 HTTP INF: UHttpFsm(2)[1:CONNECTING] run SCK(2) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:26:01 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:26:01 SCK INF: sock(2) disc lasterr:20
+19-05-02 15:26:01 HTTP INF: UHttpFsm(2)[1:CONNECTING] run SCK(2) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:26:01 SCK INF: sock(2) close
+19-05-02 15:26:01 TLS INF: tls method use 3, old 0
+19-05-02 15:26:01 TLS INF: tls use same ctx.
+19-05-02 15:26:01 SCK INF: sock(3) HTTP(2) mode:1 type:4 open 192.***.**.105 :41559
+19-05-02 15:26:01 SCK INF: sock(3) cretls ret:0
+19-05-02 15:26:01 SCK INF: sock(3) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:26:01 HTTP INF: UHttpFsm(2)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:26:01 SCK INF: sock(2) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:26:01 SCK INF: sock(2) deltls ret:0
+19-05-02 15:26:01 SCK INF: sock(3) 117.**.**.187 :8943 preconnect
+19-05-02 15:26:01 HTTP INF: UHttpFsm(2)[1:CONNECTING] run SCK(3) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:26:01 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:26:01 SCK INF: sock(3) disc lasterr:20
+19-05-02 15:26:01 HTTP INF: UHttpFsm(2)[1:CONNECTING] run SCK(3) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:26:01 HTTP ERR: http(2) retryover 3
+19-05-02 15:26:01 HTTP INF: UHttpFsm(2)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [IDLE] err(24)
+19-05-02 15:26:01 HTTP WRN: (2)MSG-PROC:1 for TMR(0) fail(24)
+19-05-02 15:26:01 SCK INF: sock(3) close
+19-05-02 15:26:01 BIND INF: UBindFsm(1)[1:WAIT_RSP] run HTTP(2) msg(100:NTY_ERR) to [RETRY] ok
+19-05-02 15:26:01 SCK INF: sock(3) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:26:01 SCK INF: sock(3) deltls ret:0
+19-05-02 15:26:09 UGP INF: AppKeepAlive
+19-05-02 15:26:32 BIND INF: UBindFsm(1)[2:RETRY] run TMR(0) msg(0:RETRY) to [WAIT_RSP] ok
+19-05-02 15:26:32 TLS INF: tls method use 3, old 0
+19-05-02 15:26:32 TLS INF: tls use same ctx.
+19-05-02 15:26:32 SCK INF: sock(4) HTTP(3) mode:1 type:4 open 192.***.**.105 :46863
+19-05-02 15:26:32 SCK INF: sock(4) cretls ret:0
+19-05-02 15:26:32 SCK INF: sock(4) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:26:32 HTTP INF: UHttpFsm(3)[0:IDLE] run BIND(1) msg(0:USER_REQ) to [CONNECTING] ok
+19-05-02 15:26:32 SCK INF: sock(4) 117.**.**.187 :8943 preconnect
+19-05-02 15:26:32 HTTP INF: UHttpFsm(3)[1:CONNECTING] run SCK(4) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:26:32 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:26:32 SCK INF: sock(4) disc lasterr:20
+19-05-02 15:26:32 HTTP INF: UHttpFsm(3)[1:CONNECTING] run SCK(4) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:26:32 SCK INF: sock(4) close
+19-05-02 15:26:32 TLS INF: tls method use 3, old 0
+19-05-02 15:26:32 TLS INF: tls use same ctx.
+19-05-02 15:26:32 SCK INF: sock(5) HTTP(3) mode:1 type:4 open 192.***.**.105 :58871
+19-05-02 15:26:32 SCK INF: sock(5) cretls ret:0
+19-05-02 15:26:32 SCK INF: sock(5) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:26:32 HTTP INF: UHttpFsm(3)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:26:32 SCK INF: sock(4) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:26:32 SCK INF: sock(4) deltls ret:0
+19-05-02 15:26:32 SCK INF: sock(5) 117.**.**.187 :8943 preconnect
+19-05-02 15:26:32 HTTP INF: UHttpFsm(3)[1:CONNECTING] run SCK(5) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:26:32 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:26:32 SCK INF: sock(5) disc lasterr:20
+19-05-02 15:26:32 HTTP INF: UHttpFsm(3)[1:CONNECTING] run SCK(5) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:26:32 SCK INF: sock(5) close
+19-05-02 15:26:32 TLS INF: tls method use 3, old 0
+19-05-02 15:26:32 TLS INF: tls use same ctx.
+19-05-02 15:26:32 SCK INF: sock(6) HTTP(3) mode:1 type:4 open 192.***.**.105 :33803
+19-05-02 15:26:32 SCK INF: sock(6) cretls ret:0
+19-05-02 15:26:32 SCK INF: sock(6) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:26:32 HTTP INF: UHttpFsm(3)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:26:32 SCK INF: sock(5) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:26:32 SCK INF: sock(5) deltls ret:0
+19-05-02 15:26:32 SCK INF: sock(6) 117.**.**.187 :8943 preconnect
+19-05-02 15:26:32 HTTP INF: UHttpFsm(3)[1:CONNECTING] run SCK(6) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:26:32 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:26:32 SCK INF: sock(6) disc lasterr:20
+19-05-02 15:26:32 HTTP INF: UHttpFsm(3)[1:CONNECTING] run SCK(6) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:26:32 HTTP ERR: http(3) retryover 3
+19-05-02 15:26:32 HTTP INF: UHttpFsm(3)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [IDLE] err(24)
+19-05-02 15:26:32 HTTP WRN: (3)MSG-PROC:1 for TMR(0) fail(24)
+19-05-02 15:26:32 SCK INF: sock(6) close
+19-05-02 15:26:32 BIND INF: UBindFsm(1)[1:WAIT_RSP] run HTTP(3) msg(100:NTY_ERR) to [RETRY] ok
+19-05-02 15:26:32 SCK INF: sock(6) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:26:32 SCK INF: sock(6) deltls ret:0
+19-05-02 15:27:02 BIND INF: UBindFsm(1)[2:RETRY] run TMR(0) msg(0:RETRY) to [WAIT_RSP] ok
+19-05-02 15:27:02 TLS INF: tls method use 3, old 0
+19-05-02 15:27:02 TLS INF: tls use same ctx.
+19-05-02 15:27:02 SCK INF: sock(7) HTTP(4) mode:1 type:4 open 192.***.**.105 :48525
+19-05-02 15:27:02 SCK INF: sock(7) cretls ret:0
+19-05-02 15:27:02 SCK INF: sock(7) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:27:02 HTTP INF: UHttpFsm(4)[0:IDLE] run BIND(1) msg(0:USER_REQ) to [CONNECTING] ok
+19-05-02 15:27:33 SCK INF: sock(7) 117.**.**.187 :8943 preconnect
+19-05-02 15:27:33 HTTP INF: UHttpFsm(4)[1:CONNECTING] run SCK(7) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:27:33 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:27:33 SCK INF: sock(7) disc lasterr:20
+19-05-02 15:27:33 HTTP INF: UHttpFsm(4)[1:CONNECTING] run SCK(7) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:27:33 SCK INF: sock(7) close
+19-05-02 15:27:33 TLS INF: tls method use 3, old 0
+19-05-02 15:27:33 TLS INF: tls use same ctx.
+19-05-02 15:27:33 SCK INF: sock(8) HTTP(4) mode:1 type:4 open 192.***.**.105 :34031
+19-05-02 15:27:33 SCK INF: sock(8) cretls ret:0
+19-05-02 15:27:33 SCK INF: sock(8) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:27:33 HTTP INF: UHttpFsm(4)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:27:34 SCK INF: sock(7) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:27:34 SCK INF: sock(7) deltls ret:0
+19-05-02 15:27:34 SCK INF: sock(8) 117.**.**.187 :8943 preconnect
+19-05-02 15:27:34 HTTP INF: UHttpFsm(4)[1:CONNECTING] run SCK(8) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:27:34 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:27:34 SCK INF: sock(8) disc lasterr:20
+19-05-02 15:27:34 HTTP INF: UHttpFsm(4)[1:CONNECTING] run SCK(8) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:27:34 SCK INF: sock(8) close
+19-05-02 15:27:34 TLS INF: tls method use 3, old 0
+19-05-02 15:27:34 TLS INF: tls use same ctx.
+19-05-02 15:27:34 SCK INF: sock(9) HTTP(4) mode:1 type:4 open 192.***.**.105 :40470
+19-05-02 15:27:34 SCK INF: sock(9) cretls ret:0
+19-05-02 15:27:34 SCK INF: sock(9) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:27:34 HTTP INF: UHttpFsm(4)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:27:34 SCK INF: sock(8) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:27:34 SCK INF: sock(8) deltls ret:0
+19-05-02 15:27:34 SCK INF: sock(9) 117.**.**.187 :8943 preconnect
+19-05-02 15:27:34 HTTP INF: UHttpFsm(4)[1:CONNECTING] run SCK(9) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:27:34 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:27:34 SCK INF: sock(9) disc lasterr:20
+19-05-02 15:27:34 HTTP INF: UHttpFsm(4)[1:CONNECTING] run SCK(9) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:27:34 HTTP ERR: http(4) retryover 3
+19-05-02 15:27:34 HTTP INF: UHttpFsm(4)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [IDLE] err(24)
+19-05-02 15:27:34 HTTP WRN: (4)MSG-PROC:1 for TMR(0) fail(24)
+19-05-02 15:27:34 SCK INF: sock(9) close
+19-05-02 15:27:34 BIND INF: UBindFsm(1)[1:WAIT_RSP] run HTTP(4) msg(100:NTY_ERR) to [RETRY] ok
+19-05-02 15:27:34 SCK INF: sock(9) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:27:34 SCK INF: sock(9) deltls ret:0
+19-05-02 15:28:04 BIND INF: UBindFsm(1)[2:RETRY] run TMR(0) msg(0:RETRY) to [WAIT_RSP] ok
+19-05-02 15:28:04 TLS INF: tls method use 3, old 0
+19-05-02 15:28:04 TLS INF: tls use same ctx.
+19-05-02 15:28:04 SCK INF: sock(10) HTTP(5) mode:1 type:4 open 192.***.**.105 :41524
+19-05-02 15:28:04 SCK INF: sock(10) cretls ret:0
+19-05-02 15:28:04 SCK INF: sock(10) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:28:04 HTTP INF: UHttpFsm(5)[0:IDLE] run BIND(1) msg(0:USER_REQ) to [CONNECTING] ok
+19-05-02 15:28:04 SCK INF: sock(10) 117.**.**.187 :8943 preconnect
+19-05-02 15:28:04 HTTP INF: UHttpFsm(5)[1:CONNECTING] run SCK(10) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:28:04 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:28:04 SCK INF: sock(10) disc lasterr:20
+19-05-02 15:28:04 HTTP INF: UHttpFsm(5)[1:CONNECTING] run SCK(10) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:28:04 SCK INF: sock(10) close
+19-05-02 15:28:04 TLS INF: tls method use 3, old 0
+19-05-02 15:28:04 TLS INF: tls use same ctx.
+19-05-02 15:28:04 SCK INF: sock(11) HTTP(5) mode:1 type:4 open 192.***.**.105 :51215
+19-05-02 15:28:04 SCK INF: sock(11) cretls ret:0
+19-05-02 15:28:04 SCK INF: sock(11) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:28:04 HTTP INF: UHttpFsm(5)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:28:04 SCK INF: sock(10) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:28:04 SCK INF: sock(10) deltls ret:0
+19-05-02 15:28:04 SCK INF: sock(11) 117.**.**.187 :8943 preconnect
+19-05-02 15:28:04 HTTP INF: UHttpFsm(5)[1:CONNECTING] run SCK(11) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:28:04 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:28:04 SCK INF: sock(11) disc lasterr:20
+19-05-02 15:28:04 HTTP INF: UHttpFsm(5)[1:CONNECTING] run SCK(11) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:28:04 SCK INF: sock(11) close
+19-05-02 15:28:04 TLS INF: tls method use 3, old 0
+19-05-02 15:28:04 TLS INF: tls use same ctx.
+19-05-02 15:28:04 SCK INF: sock(12) HTTP(5) mode:1 type:4 open 192.***.**.105 :46275
+19-05-02 15:28:04 SCK INF: sock(12) cretls ret:0
+19-05-02 15:28:04 SCK INF: sock(12) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:28:04 HTTP INF: UHttpFsm(5)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:28:05 SCK INF: sock(11) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:28:05 SCK INF: sock(11) deltls ret:0
+19-05-02 15:28:05 SCK INF: sock(12) 117.**.**.187 :8943 preconnect
+19-05-02 15:28:05 HTTP INF: UHttpFsm(5)[1:CONNECTING] run SCK(12) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:28:05 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:28:05 SCK INF: sock(12) disc lasterr:20
+19-05-02 15:28:05 HTTP INF: UHttpFsm(5)[1:CONNECTING] run SCK(12) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:28:05 HTTP ERR: http(5) retryover 3
+19-05-02 15:28:05 HTTP INF: UHttpFsm(5)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [IDLE] err(24)
+19-05-02 15:28:05 HTTP WRN: (5)MSG-PROC:1 for TMR(0) fail(24)
+19-05-02 15:28:05 SCK INF: sock(12) close
+19-05-02 15:28:05 BIND INF: UBindFsm(1)[1:WAIT_RSP] run HTTP(5) msg(100:NTY_ERR) to [RETRY] ok
+19-05-02 15:28:05 SCK INF: sock(12) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:28:05 SCK INF: sock(12) deltls ret:0
+19-05-02 15:28:35 BIND INF: UBindFsm(1)[2:RETRY] run TMR(0) msg(0:RETRY) to [WAIT_RSP] ok
+19-05-02 15:28:35 TLS INF: tls method use 3, old 0
+19-05-02 15:28:35 TLS INF: tls use same ctx.
+19-05-02 15:28:35 SCK INF: sock(13) HTTP(6) mode:1 type:4 open 192.***.**.105 :44065
+19-05-02 15:28:35 SCK INF: sock(13) cretls ret:0
+19-05-02 15:28:35 SCK INF: sock(13) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:28:35 HTTP INF: UHttpFsm(6)[0:IDLE] run BIND(1) msg(0:USER_REQ) to [CONNECTING] ok
+19-05-02 15:28:35 SCK INF: sock(13) 117.**.**.187 :8943 preconnect
+19-05-02 15:28:35 HTTP INF: UHttpFsm(6)[1:CONNECTING] run SCK(13) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:28:35 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:28:35 SCK INF: sock(13) disc lasterr:20
+19-05-02 15:28:35 HTTP INF: UHttpFsm(6)[1:CONNECTING] run SCK(13) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:28:35 SCK INF: sock(13) close
+19-05-02 15:28:35 TLS INF: tls method use 3, old 0
+19-05-02 15:28:35 TLS INF: tls use same ctx.
+19-05-02 15:28:35 SCK INF: sock(14) HTTP(6) mode:1 type:4 open 192.***.**.105 :45167
+19-05-02 15:28:35 SCK INF: sock(14) cretls ret:0
+19-05-02 15:28:35 SCK INF: sock(14) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:28:35 HTTP INF: UHttpFsm(6)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:28:35 SCK INF: sock(13) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:28:35 SCK INF: sock(13) deltls ret:0
+19-05-02 15:28:35 SCK INF: sock(14) 117.**.**.187 :8943 preconnect
+19-05-02 15:28:35 HTTP INF: UHttpFsm(6)[1:CONNECTING] run SCK(14) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:28:35 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:28:35 SCK INF: sock(14) disc lasterr:20
+19-05-02 15:28:35 HTTP INF: UHttpFsm(6)[1:CONNECTING] run SCK(14) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:28:35 SCK INF: sock(14) close
+19-05-02 15:28:35 TLS INF: tls method use 3, old 0
+19-05-02 15:28:35 TLS INF: tls use same ctx.
+19-05-02 15:28:35 SCK INF: sock(15) HTTP(6) mode:1 type:4 open 192.***.**.105 :43339
+19-05-02 15:28:35 SCK INF: sock(15) cretls ret:0
+19-05-02 15:28:35 SCK INF: sock(15) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:28:35 HTTP INF: UHttpFsm(6)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:28:35 SCK INF: sock(14) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:28:35 SCK INF: sock(14) deltls ret:0
+19-05-02 15:28:35 SCK INF: sock(15) 117.**.**.187 :8943 preconnect
+19-05-02 15:28:35 HTTP INF: UHttpFsm(6)[1:CONNECTING] run SCK(15) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:28:35 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:28:35 SCK INF: sock(15) disc lasterr:20
+19-05-02 15:28:35 HTTP INF: UHttpFsm(6)[1:CONNECTING] run SCK(15) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:28:35 HTTP ERR: http(6) retryover 3
+19-05-02 15:28:35 HTTP INF: UHttpFsm(6)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [IDLE] err(24)
+19-05-02 15:28:35 HTTP WRN: (6)MSG-PROC:1 for TMR(0) fail(24)
+19-05-02 15:28:35 SCK INF: sock(15) close
+19-05-02 15:28:35 BIND INF: UBindFsm(1)[1:WAIT_RSP] run HTTP(6) msg(100:NTY_ERR) to [RETRY] ok
+19-05-02 15:28:35 SCK INF: sock(15) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:28:35 SCK INF: sock(15) deltls ret:0
+19-05-02 15:29:05 BIND INF: UBindFsm(1)[2:RETRY] run TMR(0) msg(0:RETRY) to [WAIT_RSP] ok
+19-05-02 15:29:05 TLS INF: tls method use 3, old 0
+19-05-02 15:29:05 TLS INF: tls use same ctx.
+19-05-02 15:29:05 SCK INF: sock(16) HTTP(7) mode:1 type:4 open 192.***.**.105 :54838
+19-05-02 15:29:05 SCK INF: sock(16) cretls ret:0
+19-05-02 15:29:05 SCK INF: sock(16) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:29:05 HTTP INF: UHttpFsm(7)[0:IDLE] run BIND(1) msg(0:USER_REQ) to [CONNECTING] ok
+19-05-02 15:29:06 SCK INF: sock(16) 117.**.**.187 :8943 preconnect
+19-05-02 15:29:06 HTTP INF: UHttpFsm(7)[1:CONNECTING] run SCK(16) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:29:06 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:29:06 SCK INF: sock(16) disc lasterr:20
+19-05-02 15:29:06 HTTP INF: UHttpFsm(7)[1:CONNECTING] run SCK(16) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:29:06 SCK INF: sock(16) close
+19-05-02 15:29:06 TLS INF: tls method use 3, old 0
+19-05-02 15:29:06 TLS INF: tls use same ctx.
+19-05-02 15:29:06 SCK INF: sock(17) HTTP(7) mode:1 type:4 open 192.***.**.105 :53790
+19-05-02 15:29:06 SCK INF: sock(17) cretls ret:0
+19-05-02 15:29:06 SCK INF: sock(17) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:29:06 HTTP INF: UHttpFsm(7)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:29:06 SCK INF: sock(16) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:29:06 SCK INF: sock(16) deltls ret:0
+19-05-02 15:29:06 SCK INF: sock(17) 117.**.**.187 :8943 preconnect
+19-05-02 15:29:06 HTTP INF: UHttpFsm(7)[1:CONNECTING] run SCK(17) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:29:06 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:29:06 SCK INF: sock(17) disc lasterr:20
+19-05-02 15:29:06 HTTP INF: UHttpFsm(7)[1:CONNECTING] run SCK(17) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:29:06 SCK INF: sock(17) close
+19-05-02 15:29:06 TLS INF: tls method use 3, old 0
+19-05-02 15:29:06 TLS INF: tls use same ctx.
+19-05-02 15:29:06 SCK INF: sock(18) HTTP(7) mode:1 type:4 open 192.***.**.105 :44513
+19-05-02 15:29:06 SCK INF: sock(18) cretls ret:0
+19-05-02 15:29:06 SCK INF: sock(18) connecting 117.**.**.187 :8943 ret:0 errno:0
+19-05-02 15:29:06 HTTP INF: UHttpFsm(7)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [CONNECTING] ok
+19-05-02 15:29:06 SCK INF: sock(17) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:29:06 SCK INF: sock(17) deltls ret:0
+19-05-02 15:29:06 SCK INF: sock(18) 117.**.**.187 :8943 preconnect
+19-05-02 15:29:06 HTTP INF: UHttpFsm(7)[1:CONNECTING] run SCK(18) msg(0:TCP_ACK) to [CONNECTING] ok
+19-05-02 15:29:06 TLS ERR: tlsssl connect error[1] errno[0] e:33****278-error:1****086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+19-05-02 15:29:06 SCK INF: sock(18) disc lasterr:20
+19-05-02 15:29:06 HTTP INF: UHttpFsm(7)[1:CONNECTING] run SCK(18) msg(2:TCP_DISC) to [CONNECTING] ok
+19-05-02 15:29:06 HTTP ERR: http(7) retryover 3
+19-05-02 15:29:06 HTTP INF: UHttpFsm(7)[1:CONNECTING] run TMR(0) msg(1:WAIT_RECONN) to [IDLE] err(24)
+19-05-02 15:29:06 HTTP WRN: (7)MSG-PROC:1 for TMR(0) fail(24)
+19-05-02 15:29:06 SCK INF: sock(18) close
+19-05-02 15:29:06 BIND INF: UBindFsm(1)[1:WAIT_RSP] run HTTP(7) msg(100:NTY_ERR) to [RETRY] ok
+19-05-02 15:29:06 SCK INF: sock(18) delete send:0 recv:0 discard:0 scnt:0 rbuf:0 uerr:0
+19-05-02 15:29:06 SCK INF: sock(18) deltls ret:0
+19-05-02 15:29:36 UBIND ERR: [UBind_RetryRegToPlatform]: retry times overflow!
+19-05-02 15:29:36 BIND INF: UBindFsm(1)[2:RETRY] run TMR(0) msg(0:RETRY) to [IDLE] err(24)
+19-05-02 15:29:36 BIND WRN: (1)MSG-PROC:0 for TMR(0) fail(24)
+19-05-02 15:31:12 UGP INF: AppKeepAlive

@@ -45,6 +45,8 @@ struct IConnectionListener;
 class  Connection: public std::enable_shared_from_this<Connection>{
 //class  Connection{
 	std::mutex mutex_;
+	std::recursive_mutex rmutex_;
+
 	boost::asio::ip::tcp::socket sock_;	/*!< socket 句柄 */
 //	std::string ip_;
 //	unsigned  short port_;
@@ -65,7 +67,8 @@ class  Connection: public std::enable_shared_from_this<Connection>{
 	void        * user_data_ = NULL ;            // 用户定义数据
 
 	std::vector< std::uint8_t > databuf_;	// data recv buffer
-
+	std::vector<char> databuf_send_; //发送数据缓冲
+    char SP_ ='\0';
 protected:
 	std::string make_id();
 public:
@@ -84,6 +87,9 @@ public:
 	SocketServer * server() { return server_;}
 	void* userdata() { return user_data_ ;}
 	void userdata(void* data) { user_data_ = data ;}
+
+    void setSP(char sp){ SP_ = sp;}
+    char getSP(){ return SP_;}
 
 	std::string id(){ return id_;}
 	boost::asio::ip::tcp::socket& socket(){

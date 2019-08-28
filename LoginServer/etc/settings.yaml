@@ -137,7 +137,7 @@ services:
           - 'redis/trade.strategy.log.pub/pubsub'
 
     device_secret_key: '123456'
-
+    boxserver: '47.100.10.2:9088'
 
 
 

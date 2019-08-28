@@ -1,0 +1,5 @@
+ 'content': 'IMEI:868120201788186; TIMER:2,20,5; SENDS:2; SOS:13916624477,18601636346,,; Sensorset:10,3,5,1; TimeZone:E,8,0;', 'device_type': 'gt03', 'device_id': '868120201788186'}
+'content': 'SERVER,1,v.wallizard.com,25002,0', 'device_type': 'gt03', 'device_id': '868120201788186'}
+'content': 'FenceType:Circle, OFF, Latitude:0.000000, Longitude:0.000000, radius:300m, in out:IN or OUT, alarm type:1', 'device_type': 'gt03', 'device_id': '868120201788186'}
+'content': 'HBT:3', 'device_type': 'gt03', 'device_id': '868120201788186'}
+'content': 'Battery:3.74V,NORMAL; GPRS:Link Up GSM Signal Level:Strong; GPS:Searching satellite; SVS Used in fix:0(13); , GPS Signal Level:  Defense:OFF; ', 'device_type': 'gt03', 'device_id': '868120201788186'}

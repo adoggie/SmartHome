@@ -1,0 +1,97 @@
+
+project:
+  name : 'master'
+  id: '8888'
+  address: 'abc'
+  tel: '13916624477'
+  desc: ''
+
+garden_list:
+  - id : 'yxy-1'
+    name : '银杏苑'
+    project_id : '8888'
+
+building_list:
+  - id : '1-1'
+    name: '1楼1单元'
+    garden_id: 'yxy-1'
+
+  - id: '1-2'
+    name: '1楼2单元'
+    garden_id: 'yxy-1'
+
+room_template_list:
+  - id : 'tmp-1'
+    name : '房型-1'
+    device_type : 'FB01BOX' # 设备型号
+    project_id : '8888'
+    garden_id : 'yxy-1'
+    profile : 'profile.json'
+
+room_area_list:
+  - name : '主卧'
+    id : 'A'
+    template_id : 'tmp-1'
+    room_id : '2-1-101'
+    garden_id : 'yxy-1'
+    project_id : '8888'
+
+  - name: '客厅'
+    id : 'B'
+    template_id: 'tmp-1'
+    room_id: '2-1-101'
+    garden_id: 'yxy-1'
+    project_id: '8888'
+
+sensor_list:
+  - name : '主灯'
+    id : 0
+    type : 1
+    area_id : 'A'
+    template_id : 'tmp-1'
+
+  - name: '廊灯'
+    id: 1
+    type: 1
+    area_id: 'A'
+    template_id : 'tmp-1'
+
+  - name: '空调'
+    id: 0
+    type: 2
+    area_id: 'A'
+    template_id : 'tmp-1'
+
+
+room_list:
+  - id : '2-1-101'
+    name : '2-1-101'
+    building_id : '2-1'
+    template_id : 'tmp-1'
+    garden_id : 'yxy-1'
+    project_id : '8888'
+    device_id : 'FBXDDD0001'
+
+# 接入服务器
+device_server_list:
+  - id : 's001'
+    ip : '127.0.0.1'
+    port : 9088
+    redis_queue : 's001'
+
+smartbox_list:
+  - id : 'FBXDDD0001'
+    type : 'FBXBB01'
+    vendor : 'ee75574cf97244ae9617b756cada05db'
+    model : 'IntegratedBox'
+    protocal : 'z-ware'
+    secret_key : '123456'
+    status : 0
+    server_id : 's001'
+    active_time : 0
+    host_ver : ''
+    mcu_ver : ''
+    host_boot_time : 0
+    template_id : 'tmp-1'
+
+

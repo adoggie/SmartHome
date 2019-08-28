@@ -95,13 +95,13 @@ message_brokers:
     channels:
       - name: 'iot_data_chan'
         handler: 'handlers.iot.get_message'
-        enable: true
+        enable: false
         type: 'pubsub' # or queue
 
 services:
   - name: 'http'
     class: 'mantis.fundamental.flask.service.FlaskService'
-    enable: true
+    enable: false
     block: false
     cfgs:
       SQLALCHEMY_DATABASE_URI : 'sqlite:////tmp/test.db'
@@ -191,6 +191,7 @@ services:
 
     token_valid_time: 36000
 
+    app_sub_broker: 'localhost:6379:0:'
     servers:
       - name: 'server'
         enable: true
@@ -201,6 +202,15 @@ services:
           class: 'handlers.smartbox.SmartAdapter'
           kwargs:
             max : 100
+#      - name: 'appserver'
+#        enable: true
+#        host: ''
+#        port: 7002
+#        heartbeat: 10
+#        handler_cls:
+#          class: 'handlers.appserver.AppAdapter'
+#          kwargs:
+#            max: 100
 
 
 # qpid-receive -b localhost:5672 -a "mq_test;{create:always,node:{type:queue,durable:true}}"

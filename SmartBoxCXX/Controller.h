@@ -11,6 +11,8 @@
 #include "watchdog.h"
 #include "message.h"
 #include "connection.h"
+#include "version.h"
+
 #include <jsoncpp/json/json.h>
 #include <boost/asio.hpp>
 
@@ -86,6 +88,7 @@ private:
     void workTimedTask();
     void check_net_reachable();
     void resetStatus();
+    void uploadProfile();
 protected:
 	void onConnected(const Connection::Ptr& conn);
 	void onDisconnected(const Connection::Ptr& conn);
@@ -106,6 +109,7 @@ protected:
     std::time_t     last_heart_time_ = 0;
     int         net_check_interval_ = 60 ; // 检测与物业和室外机网络连通性时间间隔
     Connection::Ptr conn_;                  //到平台服务器连接
+    std::time_t 	boot_time_ = 0;
 };
 
 

@@ -6,6 +6,11 @@
 #include <iostream>
 #include <ctime>
 
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <iterator>
+
 #include "utils.h"
 
 //Connection::Connection(){
@@ -38,9 +43,13 @@ std::string Connection::make_id(){
 
 
 std::vector<std::string> Connection::jsondata_split(){
-    const char SP ='\0';
+//    const char SP ='\0';
 //	const char SP ='|';
+    char SP = SP_;
     std::vector<std::string> lines;
+    std::string data((const char*)&databuf_[0],databuf_.size());
+    puts("<<-");
+    puts(data.c_str());
     while(true) {
         auto itr = std::find(databuf_.begin(), databuf_.end(), SP);
         if (itr == databuf_.end()) {
@@ -111,7 +120,14 @@ void Connection::handle_read(const boost::system::error_code& error, size_t byte
         if(listener_ ){
             listener_->onDisconnected(shared_from_this());
         }
-        close();
+//        close();
+
+        deadline_timer_.cancel();
+        heartbeat_timer_.cancel();
+        if ( sock_.is_open() ){
+            sock_.close();
+        }
+
     }
 
 }
@@ -134,14 +150,23 @@ void Connection::start() {
 
 
 void Connection::send(const char * data,size_t size){
-//	SCOPED_LOCK
-    boost::asio::async_write(sock_, boost::asio::buffer(data,size),
-                             boost::bind(&Connection::handle_write, shared_from_this(),
-                                         boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
+	SCOPED_LOCK
+//    std::copy(data,data+size,std::back_inserter(databuf_send_));
+    boost::system::error_code ec;
+    boost::asio::write(sock_, boost::asio::buffer(data,size),
+            boost::asio::transfer_all(),ec);
+
+//    boost::asio::async_write(sock_, boost::asio::buffer(&databuf_send_[0],databuf_send_.size()),
+//                             boost::bind(&Connection::handle_write, shared_from_this(),
+//                                         boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 }
 
 void Connection::send(const std::string& data){
-    send(data.c_str(),data.size()+1); // 发送包含 \0 , 这个方式很不通用哦，这里将就一下
+//    send(data.c_str(),data.size()+1); // 发送包含 \0 , 这个方式很不通用哦，这里将就一下
+    send(data.c_str(),data.size()); // 发送包含 \0 , 这个方式很不通用哦，这里将就一下
+//    send(std::string(1,SP_).c_str(),1); // 发送包分割符
+    char p[1] ={SP_};
+    send(p,1);
 }
 
 void Connection::startConnect(const boost::asio::ip::tcp::endpoint& ep ){
@@ -165,11 +190,11 @@ void Connection::close(){
     if(stopped_) {
         return;
     }
-    stopped_ = true;
+//    stopped_ = true;
     boost::system::error_code ignored_error;
     sock_.close(ignored_error);
-    deadline_timer_.cancel();
-    heartbeat_timer_.cancel();
+//    deadline_timer_.cancel();
+//    heartbeat_timer_.cancel();
 
 //	if(listener_ ){
 //		listener_->onDisconnected(shared_from_this());
@@ -188,7 +213,10 @@ void Connection::start_read() {
 //		                              boost::asio::dynamic_buffer(input_buffer_), '\n',
 //		                              std::bind(&client::handle_read, this, _1, _2));
 
-    boost::asio::async_read_until(sock_,streambuf_,"\0",
+//    boost::asio::async_read_until(sock_,streambuf_,"\0",
+    char sp[2] ={SP_,0};
+    boost::asio::async_read_until(sock_,streambuf_,sp,
+//    boost::asio::async_read(sock_,streambuf_,
                                   boost::bind(&Connection::handle_read, shared_from_this(),
                                               boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 
@@ -221,6 +249,9 @@ void Connection::check_connect(){
 }
 
 void Connection::handle_write(const boost::system::error_code& error, size_t bytes_transferred) {
+//    SCOPED_LOCK
+    std::lock_guard<std::recursive_mutex> lock(rmutex_);
+
     if (stopped_) {
         return;
     }
@@ -228,6 +259,20 @@ void Connection::handle_write(const boost::system::error_code& error, size_t byt
     if (!error) {
 //			heartbeat_timer_.expires_after(std::chrono::seconds(read_timeout_));
 //			heartbeat_timer_.async_wait(std::bind(&Connection::start_write, this));
+        if(bytes_transferred>0){
+            if(databuf_send_.size() >= bytes_transferred){
+                databuf_send_.erase(databuf_send_.begin(),databuf_send_.begin()+bytes_transferred);
+            }
+        }
+        std::cout<<"Socket databuf_send size: "<< databuf_send_.size()<<std::endl;
+        if( databuf_send_.size() > 0){
+            boost::asio::async_write(sock_, boost::asio::buffer(&databuf_send_[0],databuf_send_.size()),
+                                     boost::bind(&Connection::handle_write, shared_from_this(),
+                                                 boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
+
+        }else{
+
+        }
     } else {
         std::cout << "Error on writing: " << error.message() << "\n";
 //		close();

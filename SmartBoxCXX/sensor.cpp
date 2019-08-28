@@ -143,7 +143,7 @@ void Sensor::onRecv(const char *data, size_t size) {
 //        keep_last = true;
 //    }
     buffer_ = std::string(data, size);
-    Application::instance()->getLogger().error("<< buffer: " + buffer_);
+    Application::instance()->getLogger().debug("<< buffer: " + buffer_);
 
     databuf_.resize(databuf_.size() + size);
     memcpy(&databuf_[databuf_.size() - size],data,size);

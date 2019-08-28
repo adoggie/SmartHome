@@ -4,13 +4,17 @@
 
 # import sensor_defs
 
-import json,urllib2,urllib
+import json,urllib2,urllib,os.path
 
 def get_local_ip():
     return '192.168.14.17'
 
+#  https://developer.rokid.com/docs/rokid-homebase-docs/v1/device/type.html
+
 table_device_type = {
-    2 : "light"
+    2 : "light",
+    1 : "curtain",
+    3 : "ac"
 }
 
 table_features_type = {
@@ -31,7 +35,9 @@ table_command_type = {
 }
 
 def get_device_profile_data():
-    f = open('profile.json')
+    # f = open('profile.json')
+    url = os.path.join( os.path.dirname( os.path.abspath(__file__) ),'profile-rokid.json')
+    f = open(url)
     data = json.load(f)
     f.close()
     return data
@@ -85,6 +91,8 @@ def get_device_list():
 
 """
 https://developer.rokid.com/docs/rokid-homebase-docs/connect/http-remote-driver.html
+https://developer.rokid.com/docs/rokid-homebase-docs/v1/device/actions-and-state.html#%E6%B8%A9%E5%BA%A6-temperature
+
 """
 def translate_and_send_command(command):
     device = command.get('device',{})
@@ -111,6 +119,8 @@ def translate_and_send_command(command):
         else:
             feature_value = feature.get('commands').get(name).get('value')
         # 发送到 smarbox的http api
+        print 'send command to smartbox..'
+        # return
         send_command(sensor_type,sensor_id,feature_id,feature_value)
 
 
@@ -126,8 +136,11 @@ def send_command(sensor_type,sensor_id,name,value):
     # print res
 
 
-SMARTBOX_IP = '192.168.14.17'
-SMARTBOX_PORT = 7890
+# SMARTBOX_IP = '192.168.14.17'
+SMARTBOX_IP = '127.0.0.1'
+SMARTBOX_PORT = 7001
 
 if __name__ == '__main__':
-    print get_device_list()
+    import os.path
+    print os.path.join( os.path.dirname( os.path.abspath(__file__) ),'profile-rokid.json')
+    # print get_device_list()
